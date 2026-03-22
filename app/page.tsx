@@ -307,7 +307,7 @@ export default function Home() {
               </h2>
               <p className="section-text mt-5">
                 Use the intake page to scope a build, review the case studies to
-                see how the work thinks, or go straight into a project inquiry
+                see how the work thinks, or submit a project inquiry right away
                 if you already know what needs to be built.
               </p>
             </div>

@@ -55,44 +55,23 @@ export function SectionNav({ items }: SectionNavProps) {
   }, [items, pathname]);
 
   return (
-    <>
-      <nav className="hidden gap-2 rounded-full border border-white/10 bg-white/5 p-1 text-sm text-[var(--soft)] backdrop-blur md:flex">
-        {items.map((item) => {
-          const isRouteLink = !item.href.startsWith("#");
-          const isActive = isRouteLink
-            ? pathname === item.href
-            : pathname === "/" && item.href === activeId;
+    <nav className="section-nav">
+      {items.map((item) => {
+        const isRouteLink = !item.href.startsWith("#");
+        const isActive = isRouteLink
+          ? pathname === item.href
+          : pathname === "/" && item.href === activeId;
 
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`nav-pill ${isActive ? "is-active" : ""}`}
-            >
-              {item.label}
-            </Link>
-          );
-        })}
-      </nav>
-
-      <nav className="mobile-nav md:hidden">
-        {items.map((item) => {
-          const isRouteLink = !item.href.startsWith("#");
-          const isActive = isRouteLink
-            ? pathname === item.href
-            : pathname === "/" && item.href === activeId;
-
-          return (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`mobile-nav-pill ${isActive ? "is-active" : ""}`}
-            >
-              {item.label}
-            </Link>
-          );
-        })}
-      </nav>
-    </>
+        return (
+          <Link
+            key={item.href}
+            href={item.href}
+            className={`section-nav-pill ${isActive ? "is-active" : ""}`}
+          >
+            {item.label}
+          </Link>
+        );
+      })}
+    </nav>
   );
 }

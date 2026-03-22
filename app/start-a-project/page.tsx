@@ -1,16 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ProjectInquiryForm } from "../../components/project-inquiry-form";
 import { Reveal } from "../../components/reveal";
-
-const projectTypes = [
-  "Landing page or marketing site",
-  "Full-stack web application",
-  "Internal dashboard or workflow tool",
-  "Backend API or service layer",
-  "AI feature or AI-assisted workflow",
-  "SDK, package, or developer tooling",
-];
+import { QuoteBuilder } from "../../components/quote-builder";
 
 const workingStyle = [
   "Clear project scoping before code",
@@ -24,27 +15,6 @@ const engagementModes = [
   "Product prototype or MVP",
   "Contract engineering support",
   "Technical architecture and advisory",
-];
-
-const pricingBands = [
-  {
-    title: "Small Scope",
-    range: "From $1k",
-    copy:
-      "Best for focused landing pages, narrow features, small internal tools, or scoped technical cleanup.",
-  },
-  {
-    title: "Product Build",
-    range: "$3k - $15k+",
-    copy:
-      "Best for full product surfaces, platform work, dashboards, AI-assisted features, and more substantial engineering scope.",
-  },
-  {
-    title: "Ongoing Support",
-    range: "Custom",
-    copy:
-      "Best for contract engineering, architecture help, iterative delivery, and technical partnership over time.",
-  },
 ];
 
 export const metadata: Metadata = {
@@ -158,67 +128,9 @@ export default function StartAProjectPage() {
       <div className="section-divider" />
 
       <section className="section-shell">
-        <div className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr]">
-          <Reveal className="section-copy lg:mb-0">
-            <p className="section-label">Pricing Direction</p>
-            <h2 className="section-title">Not fixed pricing. Better scoping.</h2>
-            <p className="section-text">
-              The point of this page is to set expectations early. Pricing will
-              depend on complexity, scope, delivery speed, and whether the work
-              is a one-off build or ongoing engineering support.
-            </p>
-          </Reveal>
-
-          <div className="grid gap-4">
-            {pricingBands.map((band, index) => (
-              <Reveal key={band.title} delay={index * 90}>
-                <article className="showcase-card">
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="eyebrow">{band.title}</p>
-                      <h3 className="card-title mt-3">{band.range}</h3>
-                    </div>
-                    <span className="project-mark" />
-                  </div>
-                  <p className="card-copy mt-5">{band.copy}</p>
-                </article>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <div className="section-divider" />
-
-      <section className="section-shell">
         <Reveal>
-          <ProjectInquiryForm />
+          <QuoteBuilder />
         </Reveal>
-      </section>
-
-      <div className="section-divider" />
-
-      <section className="section-shell">
-        <Reveal className="section-copy">
-          <p className="section-label">Project Types</p>
-          <h2 className="section-title">The kinds of software this page is for.</h2>
-          <p className="section-text">
-            The goal is not to fit every request into a template. It is to make
-            sure the work matches the problem, the timeline, and the level of
-            engineering it deserves.
-          </p>
-        </Reveal>
-
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {projectTypes.map((item, index) => (
-            <Reveal key={item} delay={index * 80}>
-              <article className="service-card">
-                <span className="service-dot" />
-                <p className="card-title">{item}</p>
-              </article>
-            </Reveal>
-          ))}
-        </div>
       </section>
 
       <div className="section-divider" />

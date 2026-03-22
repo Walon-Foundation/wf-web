@@ -117,6 +117,21 @@ export const featuredProjects: FeaturedProject[] = [
     tags: ["RAG", "Hono", "Pinecone"],
     summary:
       "A healthcare-focused retrieval and document processing system built to power better responses with real source grounding.",
+    caseStudy: {
+      overview:
+        "A retrieval-augmented chatbot stack focused on healthcare content, designed to surface grounded answers instead of generic AI output.",
+      challenge:
+        "Health information needs sourcing and context. Without retrieval, responses can drift or become unreliable.",
+      solution:
+        "The system combines document ingestion, vector search, and response generation so every answer is backed by real content.",
+      whyItMatters:
+        "It demonstrates applied AI with real constraints: data ingestion, retrieval quality, and response grounding.",
+      highlights: [
+        "Document ingestion pipeline tied to retrieval",
+        "Semantic search with vector indexing",
+        "AI responses anchored to source material",
+      ],
+    },
   },
   {
     slug: "monime-package",
@@ -130,6 +145,21 @@ export const featuredProjects: FeaturedProject[] = [
     tags: ["TypeScript", "SDK", "Payments"],
     summary:
       "A TypeScript SDK for Monime with typed helpers and predictable interfaces for payment platform integration.",
+    caseStudy: {
+      overview:
+        "A focused SDK that turns payment API usage into a predictable, typed developer experience.",
+      challenge:
+        "Payment APIs are error-prone without typed helpers and consistent response handling. Many integrations become brittle without good tooling.",
+      solution:
+        "The SDK wraps common endpoints with typed helpers and normalizes request/response handling for clarity and reliability.",
+      whyItMatters:
+        "It shows developer-experience focus and the ability to create leverage through tooling, not just apps.",
+      highlights: [
+        "Typed helpers for common payment flows",
+        "Predictable response handling",
+        "Packaging built for real integration work",
+      ],
+    },
   },
   {
     slug: "backend-starter-cli",
@@ -143,6 +173,21 @@ export const featuredProjects: FeaturedProject[] = [
     tags: ["Go", "CLI", "Scaffolding"],
     summary:
       "A Go-based CLI for scaffolding backend projects quickly without sacrificing useful structure and workflow clarity.",
+    caseStudy: {
+      overview:
+        "A CLI that accelerates backend setup without turning every project into a bland template.",
+      challenge:
+        "Teams waste time repeatedly setting up the same foundations, but generic boilerplate often creates low-quality defaults.",
+      solution:
+        "Backend Starter CLI provides opinionated scaffolding for multiple frameworks while keeping structure and setup steps explicit.",
+      whyItMatters:
+        "It shows a bias for developer efficiency without lowering engineering standards.",
+      highlights: [
+        "Framework scaffolding with real structure",
+        "Focused CLI workflows instead of bloated generators",
+        "Production-ready defaults for faster starts",
+      ],
+    },
   },
 ];
 
