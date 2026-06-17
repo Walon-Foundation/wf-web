@@ -4,6 +4,7 @@ export type Product = {
   domain: string;
   language: string;
   tech: string[];
+  url?: string;
 };
 
 export const PRODUCTS: Product[] = [
@@ -14,6 +15,7 @@ export const PRODUCTS: Product[] = [
     domain: 'Community health',
     language: 'TypeScript',
     tech: ['Next.js', 'TypeScript', 'Tailwind CSS'],
+    url: 'https://nexus-uplift.vercel.app',
   },
   {
     repo: 'code-lang',
@@ -30,6 +32,7 @@ export const PRODUCTS: Product[] = [
     domain: 'Youth & mentorship',
     language: 'TypeScript',
     tech: ['Next.js', 'TypeScript', 'PWA', 'Bun'],
+    url: 'https://findingyourikigai.org',
   },
   {
     repo: 'fundwave',
@@ -38,6 +41,7 @@ export const PRODUCTS: Product[] = [
     domain: 'Crowdfunding',
     language: 'TypeScript',
     tech: ['Next.js', 'TypeScript', 'Monime API'],
+    url: 'https://fundwavesl.org',
   },
   {
     repo: 'blast',
@@ -78,5 +82,6 @@ export const PRODUCTS: Product[] = [
     domain: 'Health',
     language: 'TypeScript',
     tech: ['Hono', 'Pinecone', 'OpenAI', 'PostgreSQL'],
+    url: 'https://health-chatbot-umber.vercel.app',
   },
 ];
