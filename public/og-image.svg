@@ -1,14 +1,44 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- Canvas background -->
   <rect width="1200" height="630" fill="#F4F0E8"/>
-  <g stroke="#1A1714" stroke-width="1" fill="none" opacity="0.07">
-    <path d="M-50 440 Q 300 310, 600 360 Q 900 410, 1250 330"/>
-    <path d="M-50 410 Q 300 272, 600 322 Q 900 372, 1250 292"/>
-    <path d="M-50 378 Q 320 236, 600 282 Q 892 328, 1250 248"/>
-    <path d="M 180 360 Q 480 188, 700 238 Q 880 278, 1080 208"/>
-    <path d="M 200 335 Q 480 155, 700 205 Q 880 248, 1070 172"/>
-    <path d="M 430 308 Q 575 120, 730 178"/>
-    <path d="M 445 282 Q 575 94, 720 152"/>
+
+  <!-- Topographic contour motif -->
+  <g stroke="#1A1714" stroke-width="1" fill="none" opacity="0.06">
+    <path d="M-50 480 Q 300 420, 600 450 Q 900 480, 1250 420"/>
+    <path d="M-50 450 Q 300 384, 600 415 Q 900 445, 1250 385"/>
+    <path d="M-50 418 Q 320 348, 600 378 Q 892 408, 1250 348"/>
+    <path d="M 150 395 Q 460 318, 680 348 Q 860 370, 1100 310"/>
+    <path d="M 170 368 Q 460 285, 680 318 Q 860 342, 1090 278"/>
   </g>
-  <text x="600" y="296" font-family="Georgia, serif" font-size="52" font-weight="500" fill="#1A1714" text-anchor="middle" letter-spacing="-1.5">Walon Foundation</text>
-  <text x="600" y="348" font-family="monospace" font-size="15" fill="#8A8174" text-anchor="middle" letter-spacing="4">FREETOWN · SIERRA LEONE</text>
+
+  <!-- Logo mark (left side, large) -->
+  <g transform="translate(80, 155)">
+    <rect width="200" height="200" rx="36" fill="#0E1F18"/>
+    <!-- W mark -->
+    <polyline
+      points="28,44 66,148 100,90 134,148 172,44"
+      stroke="#F4F0E8"
+      stroke-width="19"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      fill="none"
+    />
+    <!-- Clay bar -->
+    <line x1="28" y1="164" x2="172" y2="164"
+          stroke="#C75C36" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Wordmark -->
+  <text x="316" y="242" font-family="Georgia, serif" font-size="54"
+        font-weight="500" fill="#1A1714" letter-spacing="-1.5">Walon Foundation</text>
+  <text x="318" y="286" font-family="monospace" font-size="15"
+        fill="#8A8174" letter-spacing="4">FREETOWN · SIERRA LEONE</text>
+
+  <!-- Divider line -->
+  <line x1="316" y1="310" x2="900" y2="310"
+        stroke="#E5E1D8" stroke-width="1"/>
+
+  <!-- Tagline -->
+  <text x="316" y="344" font-family="Georgia, serif" font-size="20"
+        fill="#8A8174" letter-spacing="-0.3">Custom software. Open source. Built for the constraints people live with.</text>
 </svg>
