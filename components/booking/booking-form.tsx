@@ -86,19 +86,21 @@ function FieldError({ message }: { message?: string }) {
 }
 
 function PillGroup({
-  options, value, onChange,
+  options, value, onChange, labelId,
 }: {
   options: { value: string; label: string }[];
   value: string;
   onChange: (v: string) => void;
+  labelId: string;
 }) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div role="group" aria-labelledby={labelId} className="flex flex-wrap gap-2">
       {options.map((o) => {
         const active = value === o.value;
         return (
           <button
             key={o.value} type="button"
+            aria-pressed={active}
             onClick={() => onChange(active ? '' : o.value)}
             className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm border transition-all duration-150 ${
               active
@@ -241,12 +243,13 @@ export function BookingForm() {
         <SectionMark>02 · Your project</SectionMark>
 
         <div>
-          <label className="block text-sm font-medium text-ink mb-3">
+          <p id="build-type-label" className="block text-sm font-medium text-ink mb-3">
             What do you want to build?
-          </label>
+          </p>
           <PillGroup
             options={BUILD_TYPES} value={fields.buildType}
             onChange={(v) => pick('buildType', v)}
+            labelId="build-type-label"
           />
         </div>
 
@@ -271,22 +274,24 @@ export function BookingForm() {
         <SectionMark>03 · Logistics</SectionMark>
 
         <div>
-          <label className="block text-sm font-medium text-ink mb-3">
+          <p id="budget-label" className="block text-sm font-medium text-ink mb-3">
             Budget range <span className="text-mist font-normal">(optional)</span>
-          </label>
+          </p>
           <PillGroup
             options={BUDGETS} value={fields.budget}
             onChange={(v) => pick('budget', v)}
+            labelId="budget-label"
           />
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-ink mb-3">
+          <p id="contact-label" className="block text-sm font-medium text-ink mb-3">
             Best way to reach you <span className="text-mist font-normal">(optional)</span>
-          </label>
+          </p>
           <PillGroup
             options={CONTACT_METHODS} value={fields.contactPreference}
             onChange={(v) => pick('contactPreference', v)}
+            labelId="contact-label"
           />
         </div>
 
