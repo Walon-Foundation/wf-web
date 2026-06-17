@@ -28,6 +28,16 @@ const SERVICES = [
   },
 ];
 
+const listContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.09 } },
+};
+
+const listItem = {
+  hidden: { opacity: 0, x: -12 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.5, ease: EASE } },
+};
+
 export function Services() {
   const prefersReduced = useReducedMotion();
 
@@ -36,10 +46,10 @@ export function Services() {
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <motion.div
-            initial={prefersReduced ? {} : { opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={prefersReduced ? {} : { opacity: 0, y: 24, filter: 'blur(3px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.7, ease: EASE }}
+            transition={{ duration: 0.8, ease: EASE }}
           >
             <h2 className="font-fraunces font-medium text-ink text-4xl md:text-5xl mb-6">
               We build software for you
@@ -59,21 +69,23 @@ export function Services() {
           </motion.div>
 
           <motion.ul
-            initial={prefersReduced ? {} : { opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            variants={prefersReduced ? undefined : listContainer}
+            initial={prefersReduced ? { opacity: 0, y: 16 } : 'hidden'}
+            whileInView={prefersReduced ? { opacity: 1, y: 0 } : 'show'}
             viewport={{ once: true, margin: '-80px' }}
-            transition={{ duration: 0.7, delay: 0.15, ease: EASE }}
+            transition={prefersReduced ? { duration: 0.7, ease: EASE } : undefined}
           >
             {SERVICES.map((s) => (
-              <li
+              <motion.li
                 key={s.name}
+                variants={prefersReduced ? undefined : listItem}
                 className="flex flex-col py-5 border-b border-hairline last:border-b-0"
               >
                 <span className="text-ink font-medium text-sm mb-1">
                   {s.name}
                 </span>
                 <span className="text-mist text-sm">{s.detail}</span>
-              </li>
+              </motion.li>
             ))}
           </motion.ul>
         </div>

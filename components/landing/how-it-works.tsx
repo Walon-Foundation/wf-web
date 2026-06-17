@@ -29,6 +29,21 @@ const STEPS = [
   },
 ];
 
+const gridContainer = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.12 } },
+};
+
+const stepVariant = {
+  hidden: { opacity: 0, y: 28, filter: 'blur(3px)' },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.65, ease: EASE },
+  },
+};
+
 export function HowItWorks() {
   const prefersReduced = useReducedMotion();
 
@@ -36,10 +51,10 @@ export function HowItWorks() {
     <section className="py-24 md:py-32 bg-canvas">
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
-          initial={prefersReduced ? {} : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={prefersReduced ? {} : { opacity: 0, y: 24, filter: 'blur(4px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.7, ease: EASE }}
+          transition={{ duration: 0.8, ease: EASE }}
           className="mb-12"
         >
           <h2 className="font-fraunces font-medium text-ink text-4xl md:text-5xl">
@@ -47,14 +62,17 @@ export function HowItWorks() {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
-          {STEPS.map((step, i) => (
+        <motion.div
+          variants={prefersReduced ? undefined : gridContainer}
+          initial={prefersReduced ? {} : 'hidden'}
+          whileInView="show"
+          viewport={{ once: true, margin: '-80px' }}
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
+        >
+          {STEPS.map((step) => (
             <motion.div
               key={step.n}
-              initial={prefersReduced ? {} : { opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-80px' }}
-              transition={{ duration: 0.6, delay: i * 0.1, ease: EASE }}
+              variants={prefersReduced ? undefined : stepVariant}
               className="py-6 pr-8 border-t border-hairline"
             >
               <p className="font-mono text-xs text-mist mb-4">{step.n}</p>
@@ -64,7 +82,7 @@ export function HowItWorks() {
               <p className="text-mist text-sm leading-relaxed">{step.detail}</p>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

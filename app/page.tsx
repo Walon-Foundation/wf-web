@@ -7,6 +7,7 @@ import { Manifest } from '@/components/landing/manifest';
 import { Services } from '@/components/landing/services';
 import { HowItWorks } from '@/components/landing/how-it-works';
 import { ClosingCTA } from '@/components/landing/closing-cta';
+import { ScrollProgress } from '@/components/ui/scroll-progress';
 
 export const metadata: Metadata = {
   title: 'Walon Foundation — Software for Sierra Leone',
@@ -17,6 +18,7 @@ export const metadata: Metadata = {
 export default function Home() {
   return (
     <>
+      <ScrollProgress />
       <Nav />
       <main>
         <Hero />

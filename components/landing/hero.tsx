@@ -16,15 +16,20 @@ const container = {
   hidden: {},
   show: {
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
+      staggerChildren: 0.12,
+      delayChildren: 0.25,
     },
   },
 };
 
 const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } },
+  hidden: { opacity: 0, y: 28, filter: 'blur(4px)' },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.8, ease: EASE },
+  },
 };
 
 const STATS = [
@@ -43,16 +48,18 @@ export function Hero() {
     offset: ['start start', 'end start'],
   });
 
-  const backdropY = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const backdropScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
-  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '15%']);
-  const contentOpacity = useTransform(scrollYProgress, [0, 0.65], [1, 0]);
+  const backdropY = useTransform(scrollYProgress, [0, 1], ['0%', '40%']);
+  const backdropScale = useTransform(scrollYProgress, [0, 1], [1, 1.1]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '18%']);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const indicatorOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
 
   return (
     <section
       ref={ref}
       className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-canvas pt-24"
     >
+      {/* Contour backdrop — parallax layer */}
       <motion.div
         style={
           prefersReduced
@@ -68,6 +75,7 @@ export function Hero() {
         />
       </motion.div>
 
+      {/* Content */}
       <motion.div
         style={
           prefersReduced ? {} : { y: contentY, opacity: contentOpacity }
@@ -132,6 +140,21 @@ export function Hero() {
           </motion.div>
         </motion.div>
       </motion.div>
+
+      {/* Scroll indicator */}
+      {!prefersReduced && (
+        <motion.div
+          style={{ opacity: indicatorOpacity }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+          aria-hidden="true"
+        >
+          <motion.div
+            animate={{ y: [0, 10, 0] }}
+            transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
+            className="w-[1px] h-14 bg-gradient-to-b from-ink/0 via-ink/30 to-ink/0"
+          />
+        </motion.div>
+      )}
     </section>
   );
 }

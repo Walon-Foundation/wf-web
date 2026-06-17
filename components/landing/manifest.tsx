@@ -8,25 +8,30 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 const container = {
   hidden: {},
-  show: { transition: { staggerChildren: 0.07 } },
+  show: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } },
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 24, filter: 'blur(3px)' },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: 'blur(0px)',
+    transition: { duration: 0.6, ease: EASE },
+  },
 };
 
 export function Manifest() {
   const prefersReduced = useReducedMotion();
 
-  const cardItem = {
-    hidden: prefersReduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: EASE } },
-  };
-
   return (
     <section id="work" className="py-24 md:py-32 bg-canvas">
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
-          initial={prefersReduced ? {} : { opacity: 0, y: 16 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={prefersReduced ? {} : { opacity: 0, y: 24, filter: 'blur(4px)' }}
+          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
           viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.7, ease: EASE }}
+          transition={{ duration: 0.8, ease: EASE }}
           className="mb-12"
         >
           <h2 className="font-fraunces font-medium text-ink text-4xl md:text-5xl mb-4">
@@ -39,14 +44,18 @@ export function Manifest() {
         </motion.div>
 
         <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
+          variants={prefersReduced ? undefined : container}
+          initial={prefersReduced ? { opacity: 0 } : 'hidden'}
+          whileInView={prefersReduced ? { opacity: 1 } : 'show'}
           viewport={{ once: true, margin: '-80px' }}
+          transition={prefersReduced ? { duration: 0.6 } : undefined}
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
         >
           {PRODUCTS.map((product) => (
-            <motion.div key={product.repo} variants={cardItem}>
+            <motion.div
+              key={product.repo}
+              variants={prefersReduced ? undefined : cardVariant}
+            >
               <ProductCard product={product} />
             </motion.div>
           ))}
