@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
 import type { Product } from '@/lib/products';
@@ -9,7 +9,6 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 export function ProductCard({ product }: { product: Product }) {
   const [open, setOpen] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prefersReduced = useReducedMotion();
   const [mounted, setMounted] = useState(false);
 
@@ -29,22 +28,16 @@ export function ProductCard({ product }: { product: Product }) {
 
   function openModal() {
     if (prefersReduced) return;
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => setOpen(true), 220);
+    setOpen(true);
   }
 
-  function scheduleClose() {
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => setOpen(false), 180);
-  }
-
-  function cancelClose() {
-    if (timerRef.current) clearTimeout(timerRef.current);
+  function closeModal() {
+    setOpen(false);
   }
 
   return (
     <>
-      <div onMouseEnter={openModal} onMouseLeave={scheduleClose}>
+      <div onMouseEnter={openModal} onMouseLeave={closeModal}>
         <m.a
           href={`https://github.com/Walon-Foundation/${product.repo}`}
           target="_blank"
@@ -103,8 +96,8 @@ export function ProductCard({ product }: { product: Product }) {
                   exit={{ opacity: 0, scale: 0.92, y: 14 }}
                   transition={{ duration: 0.28, ease: EASE }}
                   style={{ width: 'min(90vw, 520px)', pointerEvents: 'auto' }}
-                  onMouseEnter={cancelClose}
-                  onMouseLeave={scheduleClose}
+                  onMouseEnter={openModal}
+                  onMouseLeave={closeModal}
                   className="relative bg-forest rounded-2xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.55)]"
                 >
                   {/* Contour texture watermark */}
