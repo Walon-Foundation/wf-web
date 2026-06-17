@@ -49,8 +49,6 @@ export async function POST(req: Request) {
     Budget: budget || '',
     'Contact Preference': contactPreference || '',
     'Contact Handle': contactHandle || '',
-    'Submitted At': new Date().toISOString(),
-    Status: 'New',
   });
 
   return Response.json({ success: true });

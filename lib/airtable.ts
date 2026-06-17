@@ -9,12 +9,20 @@ export async function createAirtableRecord(
 
   if (!apiKey || !baseId) return;
 
-  await fetch(`${BASE_URL}/${baseId}/${encodeURIComponent(tableId)}`, {
-    method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ records: [{ fields }] }),
-  });
+  try {
+    const res = await fetch(`${BASE_URL}/${baseId}/${encodeURIComponent(tableId)}`, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ records: [{ fields }] }),
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      console.error('[airtable] record creation failed:', err);
+    }
+  } catch (e) {
+    console.error('[airtable] fetch error:', e);
+  }
 }
