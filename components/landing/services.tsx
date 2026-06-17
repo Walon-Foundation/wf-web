@@ -50,8 +50,8 @@ export function Services() {
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <motion.div
-            initial={prefersReduced ? {} : { opacity: 0, y: 24, filter: 'blur(3px)' }}
-            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            initial={prefersReduced ? {} : { opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.8, ease: EASE }}
           >

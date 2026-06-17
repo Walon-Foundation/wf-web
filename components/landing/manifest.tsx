@@ -12,11 +12,10 @@ const container = {
 };
 
 const cardVariant = {
-  hidden: { opacity: 0, y: 24, filter: 'blur(3px)' },
+  hidden: { opacity: 0, y: 24 },
   show: {
     opacity: 1,
     y: 0,
-    filter: 'blur(0px)',
     transition: { duration: 0.6, ease: EASE },
   },
 };
@@ -28,8 +27,8 @@ export function Manifest() {
     <section id="work" className="py-24 md:py-32 bg-canvas">
       <div className="max-w-6xl mx-auto px-6">
         <motion.div
-          initial={prefersReduced ? {} : { opacity: 0, y: 24, filter: 'blur(4px)' }}
-          whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+          initial={prefersReduced ? {} : { opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
           transition={{ duration: 0.8, ease: EASE }}
           className="mb-12"

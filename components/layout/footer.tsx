@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 export function Footer() {
   const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP ?? '23276000000';
 
@@ -10,7 +12,7 @@ export function Footer() {
               Walon Foundation
             </p>
             <p className="text-mist text-sm max-w-xs">
-              Open-source software collective. Freetown, Sierra Leone.
+              Custom software and open-source tools. Freetown, Sierra Leone.
             </p>
           </div>
 
@@ -40,9 +42,16 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-10 pt-6 border-t border-hairline flex flex-col sm:flex-row justify-between gap-2 text-xs text-mist">
-          <span>Freetown, Sierra Leone</span>
-          <span>MIT-licensed — open by default</span>
+        <div className="mt-10 pt-6 border-t border-hairline flex flex-col sm:flex-row justify-between gap-4 text-xs text-mist">
+          <span>Freetown, Sierra Leone · MIT-licensed — open by default</span>
+          <div className="flex gap-4">
+            <Link href="/privacy" className="hover:text-ink transition-colors">
+              Privacy
+            </Link>
+            <Link href="/terms" className="hover:text-ink transition-colors">
+              Terms
+            </Link>
+          </div>
         </div>
       </div>
     </footer>

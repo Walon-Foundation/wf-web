@@ -21,11 +21,10 @@ const container = {
 };
 
 const line = {
-  hidden: { opacity: 0, y: 16, filter: 'blur(3px)' },
+  hidden: { opacity: 0, y: 16 },
   show: {
     opacity: 1,
     y: 0,
-    filter: 'blur(0px)',
     transition: { duration: 0.7, ease: EASE },
   },
 };
