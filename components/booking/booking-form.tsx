@@ -29,15 +29,8 @@ const CONTACT_METHODS = [
 ];
 
 type Fields = {
-  name: string;
-  email: string;
-  organization: string;
-  buildType: string;
-  details: string;
-  budget: string;
-  contactPreference: string;
-  contactHandle: string;
-  _honeypot: string;
+  name: string; email: string; organization: string; buildType: string;
+  details: string; budget: string; contactPreference: string; contactHandle: string; _honeypot: string;
 };
 
 const EMPTY: Fields = {
@@ -60,17 +53,30 @@ function validate(f: Fields): FieldErrors {
   return errors;
 }
 
+const input =
+  'w-full px-4 py-3 rounded-lg text-ink text-sm bg-hairline/30 border placeholder:text-mist/50 transition-all duration-150 focus:outline-none focus:bg-canvas';
+const inputNormal = 'border-transparent focus:border-clay focus:[box-shadow:0_0_0_3px_rgba(199,92,54,0.10)]';
+const inputErr    = 'border-clay/40 focus:border-clay focus:[box-shadow:0_0_0_3px_rgba(199,92,54,0.10)]';
+
+function SectionMark({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex items-center gap-3 mb-5">
+      <span className="font-mono text-[10px] text-mist/60 uppercase tracking-[0.18em] whitespace-nowrap">
+        {children}
+      </span>
+      <span className="flex-1 h-px bg-hairline" />
+    </div>
+  );
+}
+
 function FieldError({ message }: { message?: string }) {
   return (
     <AnimatePresence>
       {message && (
         <m.p
-          initial={{ opacity: 0, y: -4 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0 }}
+          initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
-          className="text-clay text-xs mt-1.5 leading-snug"
-          role="alert"
+          className="text-clay text-xs mt-1.5 leading-snug" role="alert"
         >
           {message}
         </m.p>
@@ -80,9 +86,7 @@ function FieldError({ message }: { message?: string }) {
 }
 
 function PillGroup({
-  options,
-  value,
-  onChange,
+  options, value, onChange,
 }: {
   options: { value: string; label: string }[];
   value: string;
@@ -94,15 +98,19 @@ function PillGroup({
         const active = value === o.value;
         return (
           <button
-            key={o.value}
-            type="button"
+            key={o.value} type="button"
             onClick={() => onChange(active ? '' : o.value)}
-            className={`px-4 py-2 rounded-lg text-sm border transition-all duration-150 ${
+            className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm border transition-all duration-150 ${
               active
                 ? 'bg-forest text-canvas border-forest font-medium'
-                : 'bg-hairline/40 text-mist border-transparent hover:border-ink/20 hover:text-ink'
+                : 'bg-hairline/40 text-mist border-transparent hover:text-ink hover:bg-hairline/70'
             }`}
           >
+            {active && (
+              <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+                <path d="M1.5 5L4 7.5L8.5 2.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            )}
             {o.label}
           </button>
         );
@@ -110,17 +118,6 @@ function PillGroup({
     </div>
   );
 }
-
-const inputBase = [
-  'w-full px-4 py-3 rounded-lg text-ink text-sm',
-  'bg-hairline/30 border',
-  'placeholder:text-mist/60',
-  'transition-all duration-150',
-  'focus:outline-none focus:bg-canvas',
-].join(' ');
-
-const inputNormal = 'border-hairline focus:border-clay focus:[box-shadow:0_0_0_3px_rgba(199,92,54,0.12)]';
-const inputErr    = 'border-clay/50 focus:border-clay focus:[box-shadow:0_0_0_3px_rgba(199,92,54,0.12)]';
 
 export function BookingForm() {
   const [fields, setFields] = useState<Fields>(EMPTY);
@@ -133,9 +130,7 @@ export function BookingForm() {
   function set(key: keyof Fields) {
     return (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       setFields((prev) => ({ ...prev, [key]: e.target.value }));
-      if (errors[key] && touched[key]) {
-        setErrors((prev) => ({ ...prev, [key]: undefined }));
-      }
+      if (errors[key] && touched[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
     };
   }
 
@@ -192,24 +187,23 @@ export function BookingForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate>
-      {/* Honeypot */}
+    <form onSubmit={handleSubmit} noValidate className="space-y-8">
       <div className="hidden" aria-hidden="true">
         <input tabIndex={-1} autoComplete="off" value={fields._honeypot} onChange={set('_honeypot')} />
       </div>
 
-      <div className="space-y-6">
+      {/* ── About you ── */}
+      <div className="space-y-4">
+        <SectionMark>01 · About you</SectionMark>
 
-        {/* Name + Email */}
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label htmlFor="name" className="block text-sm font-medium text-ink mb-2">
               Name <span className="text-clay">*</span>
             </label>
             <input
-              id="name" type="text" autoComplete="name"
-              placeholder="Your full name"
-              className={`${inputBase} ${errors.name ? inputErr : inputNormal}`}
+              id="name" type="text" autoComplete="name" placeholder="Your full name"
+              className={`${input} ${errors.name ? inputErr : inputNormal}`}
               value={fields.name} onChange={set('name')} onBlur={blur('name')}
               aria-invalid={!!errors.name}
             />
@@ -220,9 +214,8 @@ export function BookingForm() {
               Email <span className="text-clay">*</span>
             </label>
             <input
-              id="email" type="email" autoComplete="email"
-              placeholder="you@example.com"
-              className={`${inputBase} ${errors.email ? inputErr : inputNormal}`}
+              id="email" type="email" autoComplete="email" placeholder="you@example.com"
+              className={`${input} ${errors.email ? inputErr : inputNormal}`}
               value={fields.email} onChange={set('email')} onBlur={blur('email')}
               aria-invalid={!!errors.email}
             />
@@ -230,139 +223,123 @@ export function BookingForm() {
           </div>
         </div>
 
-        {/* Organization */}
         <div>
           <label htmlFor="organization" className="block text-sm font-medium text-ink mb-2">
-            Organization{' '}
-            <span className="text-mist font-normal">(optional)</span>
+            Organization <span className="text-mist font-normal">(optional)</span>
           </label>
           <input
             id="organization" type="text" autoComplete="organization"
             placeholder="Company, NGO, school, or personal project"
-            className={`${inputBase} ${inputNormal}`}
+            className={`${input} ${inputNormal}`}
             value={fields.organization} onChange={set('organization')}
           />
         </div>
+      </div>
 
-        {/* Divider */}
-        <div className="pt-2 border-t border-hairline" />
+      {/* ── Your project ── */}
+      <div className="space-y-4">
+        <SectionMark>02 · Your project</SectionMark>
 
-        {/* Build type */}
         <div>
           <label className="block text-sm font-medium text-ink mb-3">
             What do you want to build?
           </label>
           <PillGroup
-            options={BUILD_TYPES}
-            value={fields.buildType}
+            options={BUILD_TYPES} value={fields.buildType}
             onChange={(v) => pick('buildType', v)}
           />
         </div>
 
-        {/* Project details */}
         <div>
           <label htmlFor="details" className="block text-sm font-medium text-ink mb-2">
             Project details <span className="text-clay">*</span>
           </label>
           <textarea
-            id="details" rows={5}
+            id="details" rows={6}
             placeholder="What problem are you solving? Who is it for? Any timeline or constraints?"
-            className={`${inputBase} ${errors.details ? inputErr : inputNormal} resize-none`}
+            className={`${input} ${errors.details ? inputErr : inputNormal} resize-none`}
             value={fields.details} onChange={set('details')} onBlur={blur('details')}
             aria-invalid={!!errors.details}
           />
           <FieldError message={errors.details} />
-          <p className="text-xs text-mist mt-1.5">
-            More detail = faster, more useful reply.
-          </p>
+          <p className="text-xs text-mist mt-1.5">More detail = faster, more useful reply.</p>
         </div>
+      </div>
 
-        {/* Divider */}
-        <div className="pt-2 border-t border-hairline" />
+      {/* ── Logistics ── */}
+      <div className="space-y-4">
+        <SectionMark>03 · Logistics</SectionMark>
 
-        {/* Budget */}
         <div>
           <label className="block text-sm font-medium text-ink mb-3">
-            Budget range{' '}
-            <span className="text-mist font-normal">(optional)</span>
+            Budget range <span className="text-mist font-normal">(optional)</span>
           </label>
           <PillGroup
-            options={BUDGETS}
-            value={fields.budget}
+            options={BUDGETS} value={fields.budget}
             onChange={(v) => pick('budget', v)}
           />
         </div>
 
-        {/* Contact preference */}
         <div>
           <label className="block text-sm font-medium text-ink mb-3">
-            Best way to reach you{' '}
-            <span className="text-mist font-normal">(optional)</span>
+            Best way to reach you <span className="text-mist font-normal">(optional)</span>
           </label>
           <PillGroup
-            options={CONTACT_METHODS}
-            value={fields.contactPreference}
+            options={CONTACT_METHODS} value={fields.contactPreference}
             onChange={(v) => pick('contactPreference', v)}
           />
         </div>
 
-        {/* Phone — shown only when needed */}
         <AnimatePresence>
           {(fields.contactPreference === 'whatsapp' || fields.contactPreference === 'call') && (
             <m.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2, ease: EASE }}
+              initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}
+              exit={{ opacity: 0, height: 0 }} transition={{ duration: 0.2, ease: EASE }}
               className="overflow-hidden"
             >
               <label htmlFor="contactHandle" className="block text-sm font-medium text-ink mb-2">
                 Phone / WhatsApp number
               </label>
               <input
-                id="contactHandle" type="tel"
-                placeholder="+232 76 000 000"
-                className={`${inputBase} ${inputNormal}`}
+                id="contactHandle" type="tel" placeholder="+232 76 000 000"
+                className={`${input} ${inputNormal}`}
                 value={fields.contactHandle} onChange={set('contactHandle')}
               />
             </m.div>
           )}
         </AnimatePresence>
+      </div>
 
-        {/* Error banner */}
-        <AnimatePresence>
-          {status === 'error' && (
-            <m.div
-              initial={{ opacity: 0, y: -4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0 }}
-              className="p-4 border border-clay/30 rounded-lg bg-clay/5 text-sm text-ink"
-              role="alert"
-            >
-              Something went wrong —{' '}
-              <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer"
-                className="text-clay underline underline-offset-2">WhatsApp us</a>{' '}
-              or email{' '}
-              <a href="mailto:walonfoundation@gmail.com"
-                className="text-clay underline underline-offset-2">walonfoundation@gmail.com</a>.
-            </m.div>
-          )}
-        </AnimatePresence>
-
-        {/* Submit */}
-        <div className="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
-          <m.button
-            type="submit"
-            disabled={status === 'submitting'}
-            whileHover={prefersReduced ? {} : { opacity: 0.88 }}
-            whileTap={prefersReduced ? {} : { scale: 0.98 }}
-            transition={{ duration: 0.1 }}
-            className="w-full sm:w-auto px-8 py-3.5 bg-clay text-canvas text-sm font-medium rounded-lg disabled:opacity-50 transition-opacity"
+      {/* Error banner */}
+      <AnimatePresence>
+        {status === 'error' && (
+          <m.div
+            initial={{ opacity: 0, y: -4 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0 }}
+            className="p-4 border border-clay/30 rounded-lg bg-clay/5 text-sm text-ink" role="alert"
           >
-            {status === 'submitting' ? 'Sending…' : 'Send request'}
-          </m.button>
-          <p className="text-xs text-mist">Never shared with third parties.</p>
-        </div>
+            Something went wrong —{' '}
+            <a href={`https://wa.me/${whatsapp}`} target="_blank" rel="noopener noreferrer"
+              className="text-clay underline underline-offset-2">WhatsApp us</a>{' '}
+            or email{' '}
+            <a href="mailto:walonfoundation@gmail.com" className="text-clay underline underline-offset-2">
+              walonfoundation@gmail.com
+            </a>.
+          </m.div>
+        )}
+      </AnimatePresence>
+
+      {/* Submit */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4 pt-2 border-t border-hairline">
+        <m.button
+          type="submit" disabled={status === 'submitting'}
+          whileHover={prefersReduced ? {} : { opacity: 0.88 }}
+          whileTap={prefersReduced ? {} : { scale: 0.98 }}
+          transition={{ duration: 0.1 }}
+          className="w-full sm:w-auto px-8 py-3.5 bg-clay text-canvas text-sm font-medium rounded-lg disabled:opacity-50 transition-opacity"
+        >
+          {status === 'submitting' ? 'Sending…' : 'Send request'}
+        </m.button>
+        <p className="text-xs text-mist">Never shared with third parties.</p>
       </div>
     </form>
   );

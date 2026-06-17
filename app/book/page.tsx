@@ -39,33 +39,47 @@ export default function BookPage() {
             </div>
 
             <aside className="lg:pt-[7.5rem]">
-              <div className="border-t border-hairline pt-6 space-y-6 text-sm text-mist">
-                <p>
-                  After you send this, a real person on the Walon Foundation
-                  team reads it and replies. No automated responses.
+              <div className="bg-forest rounded-2xl p-7 space-y-6">
+                <p className="text-canvas/80 text-sm leading-relaxed">
+                  A real person on the Walon Foundation team reads every
+                  request and replies personally. No automated responses.
                 </p>
-                <p>
-                  We build web apps, mobile apps, payment integrations, and AI
-                  features — with a focus on what works in Sierra Leone's
-                  network conditions.
-                </p>
-                <p className="flex gap-2">
-                  <span className="text-ink font-medium shrink-0">Privacy.</span>
-                  Your information is used only to respond to your request.
-                  We do not share it with third parties, sell it, or store it
-                  beyond what is needed to reply.
-                </p>
-                <p>
+
+                <div className="h-px bg-canvas/10" />
+
+                <div className="space-y-4 text-sm">
+                  <div className="flex gap-3">
+                    <span className="font-mono text-xs text-canvas/40 pt-0.5 shrink-0">01</span>
+                    <p className="text-canvas/70 leading-relaxed">
+                      Web apps, mobile apps, payment integrations, and AI features — built to work in Sierra Leone's network conditions.
+                    </p>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="font-mono text-xs text-canvas/40 pt-0.5 shrink-0">02</span>
+                    <p className="text-canvas/70 leading-relaxed">
+                      Your information is used only to respond to your request. Never shared, never sold.
+                    </p>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="font-mono text-xs text-canvas/40 pt-0.5 shrink-0">03</span>
+                    <p className="text-canvas/70 leading-relaxed">
+                      We reply within two business days. Usually faster.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="h-px bg-canvas/10" />
+
+                <p className="text-sm text-canvas/50">
                   Prefer a faster start?{' '}
                   <a
                     href={`https://wa.me/${whatsapp}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-ink hover:text-clay transition-colors"
+                    className="text-canvas hover:text-clay transition-colors underline underline-offset-2"
                   >
                     Message us on WhatsApp
-                  </a>{' '}
-                  instead.
+                  </a>
                 </p>
               </div>
             </aside>
