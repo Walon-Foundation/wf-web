@@ -30,7 +30,8 @@ export function ProductCard({ product }: { product: Product }) {
     if (timerRef.current) clearTimeout(timerRef.current);
     const rect = cardRef.current.getBoundingClientRect();
     const left = Math.max(12, Math.min(rect.left, window.innerWidth - POPUP_W - 12));
-    setCoords({ top: rect.bottom + window.scrollY + 12, left });
+    // card scales 1.04 on hover — add a touch of extra offset to account for it
+    setCoords({ top: rect.bottom + window.scrollY + 6, left });
     setHovered(true);
   }
 
@@ -49,10 +50,15 @@ export function ProductCard({ product }: { product: Product }) {
           href={`https://github.com/Walon-Foundation/${product.repo}`}
           target="_blank"
           rel="noopener noreferrer"
-          whileHover={prefersReduced ? {} : { y: -3, boxShadow: '0 8px 24px rgba(26,23,20,0.08)' }}
-          whileTap={prefersReduced ? {} : { scale: 0.99 }}
-          transition={{ type: 'spring', stiffness: 400, damping: 30 }}
-          className="flex flex-col p-6 border border-hairline rounded-xl bg-canvas hover:border-ink/20 transition-colors h-full"
+          whileHover={prefersReduced ? {} : {
+            y: -8,
+            scale: 1.04,
+            zIndex: 20,
+            boxShadow: '0 24px 56px rgba(26,23,20,0.18)',
+          }}
+          whileTap={prefersReduced ? {} : { scale: 1.01 }}
+          transition={{ type: 'spring', stiffness: 360, damping: 26 }}
+          className="relative flex flex-col p-6 border border-hairline rounded-xl bg-canvas hover:border-ink/20 transition-colors h-full"
         >
           <p className="font-mono text-xs text-mist mb-3">{product.domain}</p>
           <h3 className="font-mono text-sm text-ink font-medium mb-2">
@@ -84,6 +90,12 @@ export function ProductCard({ product }: { product: Product }) {
               onMouseLeave={() => setHovered(false)}
               className="rounded-2xl bg-forest shadow-[0_24px_64px_rgba(0,0,0,0.35)] overflow-hidden"
             >
+              {/* Arrow notch connecting to card */}
+              <div
+                className="absolute bottom-full left-6 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[8px] border-b-forest"
+                aria-hidden="true"
+              />
+
               {/* Contour texture watermark */}
               <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
                 <svg
