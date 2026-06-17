@@ -24,6 +24,14 @@ export const PRODUCTS: Product[] = [
     tech: ['Go', 'Rust', 'Interpreter', 'Compiler'],
   },
   {
+    repo: 'ikigai',
+    description:
+      'Purpose and mentorship platform for youth in Sierra Leone — connects young people with verified mentors, supports journaling and self-discovery, built as a PWA for low-bandwidth environments',
+    domain: 'Youth & mentorship',
+    language: 'TypeScript',
+    tech: ['Next.js', 'TypeScript', 'PWA', 'Bun'],
+  },
+  {
     repo: 'fundwave',
     description:
       'Crowdfunding built for Sierra Leoneans, with mobile-money payments via Monime',
