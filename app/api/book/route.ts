@@ -1,6 +1,7 @@
 import { Resend } from 'resend';
 import { headers } from 'next/headers';
 import { rateLimit } from '@/lib/rate-limit';
+import { createAirtableRecord } from '@/lib/airtable';
 
 const resend = process.env.RESEND_API_KEY
   ? new Resend(process.env.RESEND_API_KEY)
@@ -32,12 +33,22 @@ export async function POST(req: Request) {
     return Response.json({ success: true });
   }
 
-  const { name, email, organization, buildType, details, budget, contactPreference, contactHandle } =
-    body;
+  const {
+    name,
+    email,
+    organization,
+    buildType,
+    details,
+    budget,
+    contactPreference,
+    contactHandle,
+  } = body;
 
   if (!name || !email || !details) {
     return Response.json({ error: 'Missing required fields.' }, { status: 400 });
   }
+
+  const submittedAt = new Date().toISOString();
 
   const teamText = [
     `New session request from ${name}`,
@@ -69,24 +80,39 @@ export async function POST(req: Request) {
     'Freetown, Sierra Leone',
   ].join('\n');
 
-  if (resend) {
-    await Promise.all([
-      resend.emails.send({
-        from: FROM,
-        to: TEAM_EMAIL,
-        subject: `New session request from ${name}`,
-        text: teamText,
-      }),
-      resend.emails.send({
-        from: FROM,
-        to: email,
-        subject: "We've got your request — Walon Foundation",
-        text: clientText,
-      }),
-    ]);
-  } else {
-    console.log('[/api/book] RESEND_API_KEY not set — logging request:\n', teamText);
-  }
+  await Promise.all([
+    resend
+      ? Promise.all([
+          resend.emails.send({
+            from: FROM,
+            to: TEAM_EMAIL,
+            subject: `New session request from ${name}`,
+            text: teamText,
+          }),
+          resend.emails.send({
+            from: FROM,
+            to: email,
+            subject: "We've got your request — Walon Foundation",
+            text: clientText,
+          }),
+        ])
+      : Promise.resolve(
+          console.log('[/api/book] RESEND_API_KEY not set — logging:\n', teamText)
+        ),
+
+    createAirtableRecord({
+      Name: name,
+      Email: email,
+      Organization: organization || '',
+      'Build Type': buildType || '',
+      Details: details,
+      Budget: budget || '',
+      'Contact Preference': contactPreference || '',
+      'Contact Handle': contactHandle || '',
+      'Submitted At': submittedAt,
+      Status: 'New',
+    }),
+  ]);
 
   return Response.json({ success: true });
 }

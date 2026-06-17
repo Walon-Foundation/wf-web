@@ -5,6 +5,23 @@ import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+const BUILD_TYPES = [
+  { value: 'web-app', label: 'Web app' },
+  { value: 'mobile-app', label: 'Mobile app' },
+  { value: 'payment-integration', label: 'Payment / mobile money' },
+  { value: 'ai-feature', label: 'AI feature' },
+  { value: 'data-security', label: 'Data & security' },
+  { value: 'not-sure', label: 'Not sure yet' },
+];
+
+const BUDGETS = [
+  { value: 'under-1k', label: 'Under $1k' },
+  { value: '1k-5k', label: '$1k – $5k' },
+  { value: '5k-15k', label: '$5k – $15k' },
+  { value: '15k-plus', label: '$15k+' },
+  { value: 'not-sure', label: 'Not sure' },
+];
+
 type Fields = {
   name: string;
   email: string;
@@ -34,24 +51,28 @@ type FieldErrors = Partial<Record<keyof Fields, string>>;
 
 function validate(f: Fields): FieldErrors {
   const errors: FieldErrors = {};
-  if (!f.name.trim()) {
-    errors.name = 'Your name is required.';
-  }
+  if (!f.name.trim()) errors.name = 'Your name is required.';
   if (!f.email.trim()) {
     errors.email = 'An email address is required.';
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) {
-    errors.email = "That email address doesn't look right — check for typos.";
+    errors.email = "That doesn't look like a valid email — check for typos.";
   }
-  if (!f.details.trim()) {
-    errors.details = 'Tell us what you want to build.';
-  }
+  if (!f.details.trim()) errors.details = 'Tell us what you want to build.';
   return errors;
 }
 
 const inputClass =
-  'w-full px-4 py-3 bg-canvas border border-hairline rounded-lg text-ink text-sm placeholder:text-mist focus:outline-none focus:border-ink/40 transition-colors';
+  'w-full px-4 py-3 bg-canvas border border-hairline rounded-lg text-ink text-sm placeholder:text-mist/60 focus:outline-none focus:border-ink/40 transition-colors';
 
-const labelClass = 'block text-sm text-ink font-medium mb-1.5';
+function SectionLabel({ n, label }: { n: string; label: string }) {
+  return (
+    <div className="flex items-center gap-3 mb-6">
+      <span className="font-mono text-xs text-mist/50">{n}</span>
+      <span className="flex-1 h-px bg-hairline" />
+      <span className="font-mono text-xs text-mist uppercase tracking-widest">{label}</span>
+    </div>
+  );
+}
 
 function FieldError({ message }: { message?: string }) {
   return (
@@ -78,24 +99,24 @@ export function BookingForm() {
   const prefersReduced = useReducedMotion();
   const whatsapp = process.env.NEXT_PUBLIC_WHATSAPP ?? '23276000000';
 
-  function field(key: keyof Fields) {
+  function set(key: keyof Fields) {
     return (
-      e: React.ChangeEvent<
-        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-      >
+      e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
     ) => {
       setFields((prev) => ({ ...prev, [key]: e.target.value }));
       if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
     };
   }
 
+  function pick(key: keyof Fields, value: string) {
+    setFields((prev) => ({ ...prev, [key]: prev[key] === value ? '' : value }));
+    if (errors[key]) setErrors((prev) => ({ ...prev, [key]: undefined }));
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const errs = validate(fields);
-    if (Object.keys(errs).length) {
-      setErrors(errs);
-      return;
-    }
+    if (Object.keys(errs).length) { setErrors(errs); return; }
     setStatus('submitting');
     try {
       const res = await fetch('/api/book', {
@@ -117,165 +138,180 @@ export function BookingForm() {
         initial={prefersReduced ? {} : { opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: EASE }}
-        className="py-16 text-center"
+        className="py-20 text-center"
       >
-        <p className="font-fraunces text-ink text-2xl mb-3">We've got it.</p>
-        <p className="text-mist text-sm">
-          Expect a reply within two business days. Check your inbox for a
-          confirmation.
+        <p className="font-fraunces text-ink text-3xl mb-3">We've got it.</p>
+        <p className="text-mist text-sm max-w-xs mx-auto">
+          Expect a reply within two business days. Check your inbox.
         </p>
       </m.div>
     );
   }
 
   return (
-    <form onSubmit={handleSubmit} noValidate className="space-y-6">
+    <form onSubmit={handleSubmit} noValidate className="space-y-10">
+      {/* Honeypot */}
       <div className="hidden" aria-hidden="true">
-        <input
-          tabIndex={-1}
-          autoComplete="off"
-          value={fields._honeypot}
-          onChange={field('_honeypot')}
-        />
+        <input tabIndex={-1} autoComplete="off" value={fields._honeypot} onChange={set('_honeypot')} />
       </div>
 
+      {/* Section 1 — About you */}
       <div>
-        <label htmlFor="name" className={labelClass}>
-          Name <span className="text-clay">*</span>
-        </label>
-        <input
-          id="name"
-          type="text"
-          autoComplete="name"
-          className={inputClass}
-          value={fields.name}
-          onChange={field('name')}
-          aria-invalid={!!errors.name}
-          aria-describedby={errors.name ? 'name-err' : undefined}
-        />
-        <FieldError message={errors.name} />
-      </div>
+        <SectionLabel n="01" label="About you" />
+        <div className="space-y-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label htmlFor="name" className="block text-sm font-medium text-ink mb-1.5">
+                Name <span className="text-clay">*</span>
+              </label>
+              <input
+                id="name"
+                type="text"
+                autoComplete="name"
+                placeholder="Your full name"
+                className={inputClass}
+                value={fields.name}
+                onChange={set('name')}
+                aria-invalid={!!errors.name}
+              />
+              <FieldError message={errors.name} />
+            </div>
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium text-ink mb-1.5">
+                Email <span className="text-clay">*</span>
+              </label>
+              <input
+                id="email"
+                type="email"
+                autoComplete="email"
+                placeholder="you@example.com"
+                className={inputClass}
+                value={fields.email}
+                onChange={set('email')}
+                aria-invalid={!!errors.email}
+              />
+              <FieldError message={errors.email} />
+            </div>
+          </div>
 
-      <div>
-        <label htmlFor="email" className={labelClass}>
-          Email <span className="text-clay">*</span>
-        </label>
-        <input
-          id="email"
-          type="email"
-          autoComplete="email"
-          className={inputClass}
-          value={fields.email}
-          onChange={field('email')}
-          aria-invalid={!!errors.email}
-          aria-describedby={errors.email ? 'email-err' : undefined}
-        />
-        <FieldError message={errors.email} />
-      </div>
-
-      <div>
-        <label htmlFor="organization" className={labelClass}>
-          Organization{' '}
-          <span className="text-mist font-normal">(optional)</span>
-        </label>
-        <input
-          id="organization"
-          type="text"
-          autoComplete="organization"
-          className={inputClass}
-          value={fields.organization}
-          onChange={field('organization')}
-        />
-      </div>
-
-      <div>
-        <label htmlFor="buildType" className={labelClass}>
-          What do you want to build?
-        </label>
-        <select
-          id="buildType"
-          className={inputClass}
-          value={fields.buildType}
-          onChange={field('buildType')}
-        >
-          <option value="">Select one...</option>
-          <option value="web-app">Web app</option>
-          <option value="mobile-app">Mobile app</option>
-          <option value="payment-integration">
-            Payment or mobile-money integration
-          </option>
-          <option value="ai-chatbot">AI or chatbot feature</option>
-          <option value="not-sure">Not sure yet</option>
-        </select>
-      </div>
-
-      <div>
-        <label htmlFor="details" className={labelClass}>
-          Project details <span className="text-clay">*</span>
-        </label>
-        <textarea
-          id="details"
-          rows={5}
-          className={`${inputClass} resize-none`}
-          placeholder="Describe the problem you're solving and who it's for."
-          value={fields.details}
-          onChange={field('details')}
-          aria-invalid={!!errors.details}
-          aria-describedby={errors.details ? 'details-err' : undefined}
-        />
-        <FieldError message={errors.details} />
-      </div>
-
-      <div>
-        <label htmlFor="budget" className={labelClass}>
-          Budget range <span className="text-mist font-normal">(optional)</span>
-        </label>
-        <select
-          id="budget"
-          className={inputClass}
-          value={fields.budget}
-          onChange={field('budget')}
-        >
-          <option value="">Select a range...</option>
-          <option value="under-25k">Under SLE 25,000 (~$1k)</option>
-          <option value="25k-120k">SLE 25k–120k (~$1–5k)</option>
-          <option value="120k-350k">SLE 120k–350k (~$5–15k)</option>
-          <option value="350k-plus">SLE 350k+ (~$15k+)</option>
-          <option value="not-sure">Not sure</option>
-        </select>
-      </div>
-
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div>
-          <label htmlFor="contactPreference" className={labelClass}>
-            Preferred contact{' '}
-            <span className="text-mist font-normal">(optional)</span>
-          </label>
-          <select
-            id="contactPreference"
-            className={inputClass}
-            value={fields.contactPreference}
-            onChange={field('contactPreference')}
-          >
-            <option value="">Select...</option>
-            <option value="email">Email</option>
-            <option value="whatsapp">WhatsApp</option>
-            <option value="call">Call</option>
-          </select>
+          <div>
+            <label htmlFor="organization" className="block text-sm font-medium text-ink mb-1.5">
+              Organization <span className="text-mist font-normal text-xs">(optional)</span>
+            </label>
+            <input
+              id="organization"
+              type="text"
+              autoComplete="organization"
+              placeholder="Company, NGO, school, or personal project"
+              className={inputClass}
+              value={fields.organization}
+              onChange={set('organization')}
+            />
+          </div>
         </div>
-        <div>
-          <label htmlFor="contactHandle" className={labelClass}>
-            Contact handle{' '}
-            <span className="text-mist font-normal">(optional)</span>
-          </label>
-          <input
-            id="contactHandle"
-            type="text"
-            className={inputClass}
-            placeholder="Phone, WhatsApp number, etc."
-            value={fields.contactHandle}
-            onChange={field('contactHandle')}
-          />
+      </div>
+
+      {/* Section 2 — Your project */}
+      <div>
+        <SectionLabel n="02" label="Your project" />
+        <div className="space-y-5">
+          <div>
+            <p className="block text-sm font-medium text-ink mb-3">
+              What do you want to build?
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {BUILD_TYPES.map((t) => (
+                <button
+                  key={t.value}
+                  type="button"
+                  onClick={() => pick('buildType', t.value)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium border transition-colors ${
+                    fields.buildType === t.value
+                      ? 'bg-forest text-canvas border-forest'
+                      : 'bg-canvas text-ink border-hairline hover:border-ink/30'
+                  }`}
+                >
+                  {t.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label htmlFor="details" className="block text-sm font-medium text-ink mb-1.5">
+              Project details <span className="text-clay">*</span>
+            </label>
+            <textarea
+              id="details"
+              rows={5}
+              className={`${inputClass} resize-none`}
+              placeholder="What problem are you solving? Who is it for? Any deadlines or constraints we should know about?"
+              value={fields.details}
+              onChange={set('details')}
+              aria-invalid={!!errors.details}
+            />
+            <FieldError message={errors.details} />
+          </div>
+        </div>
+      </div>
+
+      {/* Section 3 — Logistics */}
+      <div>
+        <SectionLabel n="03" label="Logistics" />
+        <div className="space-y-5">
+          <div>
+            <p className="block text-sm font-medium text-ink mb-3">
+              Budget range <span className="text-mist font-normal text-xs">(optional)</span>
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {BUDGETS.map((b) => (
+                <button
+                  key={b.value}
+                  type="button"
+                  onClick={() => pick('budget', b.value)}
+                  className={`px-4 py-2 rounded-lg text-sm font-medium border transition-colors ${
+                    fields.budget === b.value
+                      ? 'bg-forest text-canvas border-forest'
+                      : 'bg-canvas text-ink border-hairline hover:border-ink/30'
+                  }`}
+                >
+                  {b.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            <div>
+              <label htmlFor="contactPreference" className="block text-sm font-medium text-ink mb-1.5">
+                Preferred contact <span className="text-mist font-normal text-xs">(optional)</span>
+              </label>
+              <select
+                id="contactPreference"
+                className={inputClass}
+                value={fields.contactPreference}
+                onChange={set('contactPreference')}
+              >
+                <option value="">Select...</option>
+                <option value="email">Email</option>
+                <option value="whatsapp">WhatsApp</option>
+                <option value="call">Call</option>
+              </select>
+            </div>
+            <div>
+              <label htmlFor="contactHandle" className="block text-sm font-medium text-ink mb-1.5">
+                Phone / WhatsApp <span className="text-mist font-normal text-xs">(optional)</span>
+              </label>
+              <input
+                id="contactHandle"
+                type="text"
+                placeholder="+232 76 000 000"
+                className={inputClass}
+                value={fields.contactHandle}
+                onChange={set('contactHandle')}
+              />
+            </div>
+          </div>
         </div>
       </div>
 
@@ -287,28 +323,24 @@ export function BookingForm() {
           role="alert"
         >
           <p className="text-sm text-ink">
-            Something went wrong on our end. You can also reach us on{' '}
+            Something went wrong.{' '}
             <a
               href={`https://wa.me/${whatsapp}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-clay underline underline-offset-2"
             >
-              WhatsApp
+              Message us on WhatsApp
             </a>{' '}
-            or at{' '}
-            <a
-              href="mailto:walonfoundation@gmail.com"
-              className="text-clay underline underline-offset-2"
-            >
+            or email{' '}
+            <a href="mailto:walonfoundation@gmail.com" className="text-clay underline underline-offset-2">
               walonfoundation@gmail.com
-            </a>
-            .
+            </a>.
           </p>
         </m.div>
       )}
 
-      <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center gap-4 pt-2">
         <m.button
           type="submit"
           disabled={status === 'submitting'}
@@ -316,11 +348,10 @@ export function BookingForm() {
           whileTap={prefersReduced ? {} : { scale: 0.99 }}
           className="w-full sm:w-auto px-8 py-3.5 bg-clay text-canvas text-sm font-medium rounded-lg disabled:opacity-60 transition-opacity"
         >
-          {status === 'submitting' ? 'Sending...' : 'Send request'}
+          {status === 'submitting' ? 'Sending…' : 'Send request'}
         </m.button>
         <p className="text-xs text-mist">
-          Your information is used only to respond to your request and is never
-          shared with third parties.
+          Your information is never shared with third parties.
         </p>
       </div>
     </form>
