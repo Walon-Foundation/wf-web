@@ -11,7 +11,7 @@ export const PRODUCTS: Product[] = [
     repo: 'fundwave',
     description:
       'Crowdfunding built for Sierra Leoneans, with mobile-money payments',
-    domain: 'Fintech',
+    domain: 'Crowdfunding',
     language: 'TypeScript',
     tech: ['Next.js', 'TypeScript', 'Monime API', 'Tailwind CSS'],
   },
