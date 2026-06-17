@@ -49,6 +49,12 @@ export default function BookPage() {
                   features — with a focus on what works in Sierra Leone's
                   network conditions.
                 </p>
+                <p className="flex gap-2">
+                  <span className="text-ink font-medium shrink-0">Privacy.</span>
+                  Your information is used only to respond to your request.
+                  We do not share it with third parties, sell it, or store it
+                  beyond what is needed to reply.
+                </p>
                 <p>
                   Prefer a faster start?{' '}
                   <a

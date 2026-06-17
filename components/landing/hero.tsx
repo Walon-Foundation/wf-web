@@ -105,9 +105,9 @@ export function Hero() {
             variants={item}
             className="text-mist text-lg md:text-xl leading-relaxed max-w-xl mb-10"
           >
-            Walon Foundation ships open-source tools built for the constraints
-            people actually live with — and builds custom software for clients
-            who need it done right.
+            Walon Foundation builds custom software for clients worldwide —
+            securing their data where it matters, and open-sourcing what we can
+            under the MIT license.
           </motion.p>
 
           <motion.div

@@ -6,11 +6,12 @@ import { ContourDivider } from '@/components/ui/contour';
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 const LINES = [
-  'Sierra Leone has the problems.',
-  'The engineers are here.',
-  'The foundation ships the software —',
-  'open source, MIT-licensed, built for low bandwidth,',
-  'mobile money, and the constraints that people actually live with.',
+  'We build software that solves real problems.',
+  'Your data stays private —',
+  'handled with care, secured where it needs to be.',
+  'What we can open-source, we do:',
+  'MIT-licensed, built for low bandwidth, mobile money,',
+  'and the constraints people actually live with.',
   'Not for screenshots.',
 ];
 
@@ -33,8 +34,8 @@ export function Mission() {
   const prefersReduced = useReducedMotion();
 
   return (
-    <section className="py-24 md:py-32 bg-canvas">
-      <ContourDivider className="text-ink/10 mb-16" />
+    <section className="pt-0 pb-24 md:pb-32 bg-canvas">
+      <ContourDivider className="text-ink/10 mb-12" />
       <div className="max-w-6xl mx-auto px-6">
         <motion.p
           variants={prefersReduced ? undefined : container}
@@ -47,11 +48,7 @@ export function Mission() {
           {prefersReduced
             ? LINES.join(' ')
             : LINES.map((l, i) => (
-                <motion.span
-                  key={i}
-                  variants={line}
-                  className="inline"
-                >
+                <motion.span key={i} variants={line} className="inline">
                   {l}{' '}
                 </motion.span>
               ))}

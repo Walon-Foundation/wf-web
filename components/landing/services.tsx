@@ -19,6 +19,10 @@ const SERVICES = [
     detail: 'Monime, mobile money, and local payment rails',
   },
   {
+    name: 'Data security & privacy',
+    detail: 'Proper authentication, encrypted storage, and privacy-first architecture for client data',
+  },
+  {
     name: 'AI and RAG features',
     detail: 'Chatbots, retrieval pipelines, document Q&A',
   },
@@ -56,9 +60,10 @@ export function Services() {
             </h2>
             <p className="text-mist leading-relaxed mb-8">
               Businesses, NGOs, and individuals hire the foundation to build
-              software that works for Sierra Leone — and beyond. We understand
-              the local infrastructure, the payment landscape, and the
-              constraints your users actually face.
+              software that works. We handle client data with care — securing
+              it properly wherever the work calls for it. We know the local
+              infrastructure, the payment landscape, and the constraints your
+              users actually face.
             </p>
             <Link
               href="/book"
