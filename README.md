@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# wf-web — Walon Foundation
 
-## Getting Started
+Marketing site for [Walon Foundation](https://github.com/Walon-Foundation), an open-source software collective in Freetown, Sierra Leone.
 
-First, run the development server:
+**Two routes:** `/` (landing) and `/book` (booking intake).
+
+## Stack
+
+- Next.js 16.2.1 (App Router) + TypeScript
+- Tailwind CSS v4
+- Framer Motion
+- Resend (email delivery)
+
+## Setup
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+bun install
+cp .env.example .env.local
+# Fill in values, then:
+bun run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Environment variables
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Variable | Required | Description |
+|---|---|---|
+| `RESEND_API_KEY` | No — dev works without it | Resend API key. Without it, bookings log to console. |
+| `NEXT_PUBLIC_WHATSAPP` | No | WhatsApp number for wa.me links, digits only (e.g. `23276000000`) |
+| `NEXT_PUBLIC_CF_ANALYTICS_TOKEN` | No | Cloudflare Web Analytics token |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Adding a scheduling embed
 
-## Learn More
+Edit `components/booking/scheduling-embed.tsx` and replace the `null` return with your Cal.com or Calendly embed. It renders below the booking form on `/book`.
 
-To learn more about Next.js, take a look at the following resources:
+## Deploy
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Cloudflare Pages or Vercel. `proxy.ts` at the repo root enables the Cloudflare Build Adapters API introduced in Next.js 16.2.
