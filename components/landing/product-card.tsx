@@ -74,7 +74,7 @@ export function ProductCard({ product }: { product: Product }) {
                 top: coords.top,
                 left: coords.left,
                 width: POPUP_W,
-                zIndex: 9999,
+                zIndex: 10000,
               }}
               initial={{ opacity: 0, y: -12, scale: 0.94 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
