@@ -37,8 +37,8 @@ export function Manifest() {
             What we've shipped
           </h2>
           <p className="text-mist max-w-lg">
-            Eight open-source products across fintech, health, education, civic
-            tech, and developer tooling.
+            Open-source projects across community health, programming languages,
+            fintech, developer tooling, and education.
           </p>
         </m.div>
 

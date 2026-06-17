@@ -8,65 +8,67 @@ export type Product = {
 
 export const PRODUCTS: Product[] = [
   {
+    repo: 'nexus-uplift',
+    description:
+      'Non-profit running community health workshops in Freetown — teaching children and caregivers real causes and treatments, addressing superstitions that delay care and cost lives',
+    domain: 'Community health',
+    language: 'TypeScript',
+    tech: ['Next.js', 'TypeScript', 'Tailwind CSS'],
+  },
+  {
+    repo: 'code-lang',
+    description:
+      'A modern interpreted programming language written in Go, extended beyond Writing An Interpreter In Go with custom features and a Rust compiler backend',
+    domain: 'Programming language',
+    language: 'Go / Rust',
+    tech: ['Go', 'Rust', 'Interpreter', 'Compiler'],
+  },
+  {
     repo: 'fundwave',
     description:
-      'Crowdfunding built for Sierra Leoneans, with mobile-money payments',
+      'Crowdfunding built for Sierra Leoneans, with mobile-money payments via Monime',
     domain: 'Crowdfunding',
     language: 'TypeScript',
-    tech: ['Next.js', 'TypeScript', 'Monime API', 'Tailwind CSS'],
+    tech: ['Next.js', 'TypeScript', 'Monime API'],
+  },
+  {
+    repo: 'blast',
+    description:
+      'Fast, config-driven API load tester and traffic generator written in Rust',
+    domain: 'Developer tooling',
+    language: 'Rust',
+    tech: ['Rust', 'CLI', 'HTTP'],
   },
   {
     repo: 'tele-health',
     description:
-      'Anonymous mental-health counseling PWA — works on 3G, asks for no personal info',
+      'Anonymous mental-health counseling PWA for young people in Sierra Leone — works on 3G, no personal info required',
     domain: 'Health',
     language: 'TypeScript / PWA',
     tech: ['Next.js', 'TypeScript', 'PWA', 'Service Worker'],
   },
   {
-    repo: 'business-directory',
+    repo: 'backend-starter-cli',
     description:
-      'Hackathon-winning registry with real-time verification of Sierra Leonean businesses',
-    domain: 'Civic',
-    language: 'TypeScript',
-    tech: ['TypeScript', 'Next.js', 'PostgreSQL', 'REST API'],
+      'CLI tool that scaffolds production-ready backend projects in seconds, with intelligent defaults and best practices built in',
+    domain: 'Developer tooling',
+    language: 'Go',
+    tech: ['Go', 'CLI', 'Code generation'],
   },
   {
     repo: 'edu-ai',
-    description: 'Turns PDFs into summaries, flashcards, and Q&A',
+    description:
+      'Ingests PDFs and uses AI to generate summaries, flashcards, and Q&A for students',
     domain: 'Education',
     language: 'TypeScript',
-    tech: ['TypeScript', 'OpenAI', 'Next.js', 'PDF.js'],
+    tech: ['Next.js', 'TypeScript', 'OpenAI', 'PDF.js'],
   },
   {
     repo: 'health-chatbot',
     description:
-      'RAG health assistant (Hono, Pinecone, OpenAI/OpenRouter, PostgreSQL)',
+      'RAG health assistant powered by Hono, Pinecone, OpenAI/OpenRouter, and PostgreSQL',
     domain: 'Health',
     language: 'TypeScript',
     tech: ['Hono', 'Pinecone', 'OpenAI', 'PostgreSQL'],
-  },
-  {
-    repo: 'deen-track',
-    description:
-      'Privacy-first tracker for Muslims to log reflections and spiritual progress',
-    domain: 'Community',
-    language: 'TypeScript',
-    tech: ['TypeScript', 'React', 'localStorage', 'No backend'],
-  },
-  {
-    repo: 'monime-package',
-    description: 'Typed helpers for Monime mobile-money payments',
-    domain: 'Fintech tooling',
-    language: 'TypeScript / Go',
-    tech: ['TypeScript', 'Go', 'npm', 'Monime API'],
-  },
-  {
-    repo: 'chatbot-react',
-    description:
-      'Drop-in React/Next.js chatbot component, CSS bundled inline',
-    domain: 'Developer tooling',
-    language: 'React / CSS',
-    tech: ['React', 'TypeScript', 'CSS Modules', 'npm'],
   },
 ];
