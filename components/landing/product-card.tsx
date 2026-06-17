@@ -31,13 +31,9 @@ export function ProductCard({ product }: { product: Product }) {
     setOpen(true);
   }
 
-  function closeModal() {
-    setOpen(false);
-  }
-
   return (
     <>
-      <div onMouseEnter={openModal} onMouseLeave={closeModal}>
+      <div onMouseEnter={openModal}>
         <m.a
           href={`https://github.com/Walon-Foundation/${product.repo}`}
           target="_blank"
@@ -96,8 +92,6 @@ export function ProductCard({ product }: { product: Product }) {
                   exit={{ opacity: 0, scale: 0.92, y: 14 }}
                   transition={{ duration: 0.28, ease: EASE }}
                   style={{ width: 'min(90vw, 520px)', pointerEvents: 'auto' }}
-                  onMouseEnter={openModal}
-                  onMouseLeave={closeModal}
                   className="relative bg-forest rounded-2xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.55)]"
                 >
                   {/* Contour texture watermark */}
