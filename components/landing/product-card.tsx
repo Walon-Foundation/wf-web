@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import type { Product } from '@/lib/products';
 
 interface ProductCardProps {
@@ -11,7 +11,7 @@ export function ProductCard({ product }: ProductCardProps) {
   const prefersReduced = useReducedMotion();
 
   return (
-    <motion.a
+    <m.a
       href={`https://github.com/Walon-Foundation/${product.repo}`}
       target="_blank"
       rel="noopener noreferrer"
@@ -32,6 +32,6 @@ export function ProductCard({ product }: ProductCardProps) {
         {product.description}
       </p>
       <p className="font-mono text-xs text-mist/60">{product.language}</p>
-    </motion.a>
+    </m.a>
   );
 }

@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useReducedMotion, type MotionValue } from 'framer-motion';
+import { m, useReducedMotion, type MotionValue } from 'framer-motion';
 
 const PATHS = [
   'M-50 300 Q 150 180, 400 220 Q 650 260, 900 200 Q 1100 160, 1300 210',
@@ -40,7 +40,7 @@ export function Contour({ scrollProgress, className = '' }: ContourProps) {
             opacity="0.25"
           />
         ) : scrollProgress ? (
-          <motion.path
+          <m.path
             key={i}
             d={d}
             fill="none"
@@ -49,7 +49,7 @@ export function Contour({ scrollProgress, className = '' }: ContourProps) {
             style={{ pathLength: scrollProgress, opacity: 0.25 }}
           />
         ) : (
-          <motion.path
+          <m.path
             key={i}
             d={d}
             fill="none"

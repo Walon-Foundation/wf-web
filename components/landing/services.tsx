@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -49,7 +49,7 @@ export function Services() {
     <section id="services" className="py-24 md:py-32 bg-canvas">
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          <motion.div
+          <m.div
             initial={prefersReduced ? {} : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
@@ -71,9 +71,9 @@ export function Services() {
             >
               Book a session
             </Link>
-          </motion.div>
+          </m.div>
 
-          <motion.ul
+          <m.ul
             variants={prefersReduced ? undefined : listContainer}
             initial={prefersReduced ? { opacity: 0, y: 16 } : 'hidden'}
             whileInView={prefersReduced ? { opacity: 1, y: 0 } : 'show'}
@@ -81,7 +81,7 @@ export function Services() {
             transition={prefersReduced ? { duration: 0.7, ease: EASE } : undefined}
           >
             {SERVICES.map((s) => (
-              <motion.li
+              <m.li
                 key={s.name}
                 variants={prefersReduced ? undefined : listItem}
                 className="flex flex-col py-5 border-b border-hairline last:border-b-0"
@@ -90,9 +90,9 @@ export function Services() {
                   {s.name}
                 </span>
                 <span className="text-mist text-sm">{s.detail}</span>
-              </motion.li>
+              </m.li>
             ))}
-          </motion.ul>
+          </m.ul>
         </div>
       </div>
     </section>

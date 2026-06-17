@@ -3,7 +3,7 @@
 import { useRef } from 'react';
 import Link from 'next/link';
 import {
-  motion,
+  m,
   useScroll,
   useTransform,
   useReducedMotion,
@@ -59,7 +59,7 @@ export function Hero() {
       className="relative min-h-screen flex flex-col justify-center overflow-hidden bg-canvas pt-24"
     >
       {/* Contour backdrop — parallax layer */}
-      <motion.div
+      <m.div
         style={
           prefersReduced
             ? {}
@@ -72,44 +72,44 @@ export function Hero() {
           scrollProgress={prefersReduced ? undefined : scrollYProgress}
           className="opacity-[0.12]"
         />
-      </motion.div>
+      </m.div>
 
       {/* Content */}
-      <motion.div
+      <m.div
         style={
           prefersReduced ? {} : { y: contentY, opacity: contentOpacity }
         }
         className="relative z-10 max-w-6xl mx-auto px-6 py-24"
       >
-        <motion.div
+        <m.div
           variants={container}
           initial={prefersReduced ? 'show' : 'hidden'}
           animate="show"
         >
-          <motion.p
+          <m.p
             variants={item}
             className="font-mono text-xs text-mist tracking-[0.2em] uppercase mb-8"
           >
             KUSHƐ · BUILT IN FREETOWN
-          </motion.p>
+          </m.p>
 
-          <motion.h1
+          <m.h1
             variants={item}
             className="font-fraunces font-medium text-ink text-5xl sm:text-6xl md:text-7xl lg:text-8xl leading-[0.95] tracking-[-0.04em] max-w-4xl mb-8"
           >
             Software for Sierra Leone, built by Sierra Leoneans.
-          </motion.h1>
+          </m.h1>
 
-          <motion.p
+          <m.p
             variants={item}
             className="text-mist text-lg md:text-xl leading-relaxed max-w-xl mb-10"
           >
             Walon Foundation builds custom software for clients worldwide —
             securing their data where it matters, and open-sourcing what we can
             under the MIT license.
-          </motion.p>
+          </m.p>
 
-          <motion.div
+          <m.div
             variants={item}
             className="flex flex-wrap gap-4 mb-16"
           >
@@ -125,9 +125,9 @@ export function Hero() {
             >
               See our work
             </a>
-          </motion.div>
+          </m.div>
 
-          <motion.div
+          <m.div
             variants={item}
             className="flex flex-wrap gap-6 text-xs font-mono text-mist"
           >
@@ -136,23 +136,23 @@ export function Hero() {
                 {stat}
               </span>
             ))}
-          </motion.div>
-        </motion.div>
-      </motion.div>
+          </m.div>
+        </m.div>
+      </m.div>
 
       {/* Scroll indicator */}
       {!prefersReduced && (
-        <motion.div
+        <m.div
           style={{ opacity: indicatorOpacity }}
           className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
           aria-hidden="true"
         >
-          <motion.div
+          <m.div
             animate={{ y: [0, 10, 0] }}
             transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
             className="w-[1px] h-14 bg-gradient-to-b from-ink/0 via-ink/30 to-ink/0"
           />
-        </motion.div>
+        </m.div>
       )}
     </section>
   );

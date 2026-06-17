@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -49,7 +49,7 @@ export function HowItWorks() {
   return (
     <section className="py-24 md:py-32 bg-canvas">
       <div className="max-w-6xl mx-auto px-6">
-        <motion.div
+        <m.div
           initial={prefersReduced ? {} : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
@@ -59,9 +59,9 @@ export function HowItWorks() {
           <h2 className="font-fraunces font-medium text-ink text-4xl md:text-5xl">
             How it works
           </h2>
-        </motion.div>
+        </m.div>
 
-        <motion.div
+        <m.div
           variants={prefersReduced ? undefined : gridContainer}
           initial={prefersReduced ? {} : 'hidden'}
           whileInView="show"
@@ -69,7 +69,7 @@ export function HowItWorks() {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4"
         >
           {STEPS.map((step) => (
-            <motion.div
+            <m.div
               key={step.n}
               variants={prefersReduced ? undefined : stepVariant}
               className="py-6 pr-8 border-t border-hairline"
@@ -79,9 +79,9 @@ export function HowItWorks() {
                 {step.title}
               </h3>
               <p className="text-mist text-sm leading-relaxed">{step.detail}</p>
-            </motion.div>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

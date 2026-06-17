@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { ContourDivider } from '@/components/ui/contour';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -36,7 +36,7 @@ export function Mission() {
     <section className="pt-0 pb-24 md:pb-32 bg-canvas">
       <ContourDivider className="text-ink/10 mb-12" />
       <div className="max-w-6xl mx-auto px-6">
-        <motion.p
+        <m.p
           variants={prefersReduced ? undefined : container}
           initial={prefersReduced ? { opacity: 0, y: 16 } : 'hidden'}
           whileInView={prefersReduced ? { opacity: 1, y: 0 } : 'show'}
@@ -47,11 +47,11 @@ export function Mission() {
           {prefersReduced
             ? LINES.join(' ')
             : LINES.map((l, i) => (
-                <motion.span key={i} variants={line} className="inline">
+                <m.span key={i} variants={line} className="inline">
                   {l}{' '}
-                </motion.span>
+                </m.span>
               ))}
-        </motion.p>
+        </m.p>
       </div>
     </section>
   );

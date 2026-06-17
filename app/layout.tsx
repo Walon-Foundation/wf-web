@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { fraunces, geistSans, geistMono } from '@/lib/fonts';
+import { MotionProvider } from '@/components/ui/motion-provider';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -65,7 +66,9 @@ export default function RootLayout({
           />
         )}
       </head>
-      <body className="bg-canvas text-ink">{children}</body>
+      <body className="bg-canvas text-ink">
+        <MotionProvider>{children}</MotionProvider>
+      </body>
     </html>
   );
 }

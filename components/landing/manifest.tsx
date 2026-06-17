@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
+import { m, useReducedMotion } from 'framer-motion';
 import { PRODUCTS } from '@/lib/products';
 import { ProductCard } from './product-card';
 
@@ -26,7 +26,7 @@ export function Manifest() {
   return (
     <section id="work" className="py-24 md:py-32 bg-canvas">
       <div className="max-w-6xl mx-auto px-6">
-        <motion.div
+        <m.div
           initial={prefersReduced ? {} : { opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-80px' }}
@@ -40,9 +40,9 @@ export function Manifest() {
             Eight open-source products across fintech, health, education, civic
             tech, and developer tooling.
           </p>
-        </motion.div>
+        </m.div>
 
-        <motion.div
+        <m.div
           variants={prefersReduced ? undefined : container}
           initial={prefersReduced ? { opacity: 0 } : 'hidden'}
           whileInView={prefersReduced ? { opacity: 1 } : 'show'}
@@ -51,14 +51,14 @@ export function Manifest() {
           className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
         >
           {PRODUCTS.map((product) => (
-            <motion.div
+            <m.div
               key={product.repo}
               variants={prefersReduced ? undefined : cardVariant}
             >
               <ProductCard product={product} />
-            </motion.div>
+            </m.div>
           ))}
-        </motion.div>
+        </m.div>
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
+import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -57,7 +57,7 @@ function FieldError({ message }: { message?: string }) {
   return (
     <AnimatePresence>
       {message && (
-        <motion.p
+        <m.p
           initial={{ opacity: 0, y: -4 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0 }}
@@ -65,7 +65,7 @@ function FieldError({ message }: { message?: string }) {
           role="alert"
         >
           {message}
-        </motion.p>
+        </m.p>
       )}
     </AnimatePresence>
   );
@@ -113,7 +113,7 @@ export function BookingForm() {
 
   if (status === 'success') {
     return (
-      <motion.div
+      <m.div
         initial={prefersReduced ? {} : { opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: EASE }}
@@ -124,7 +124,7 @@ export function BookingForm() {
           Expect a reply within two business days. Check your inbox for a
           confirmation.
         </p>
-      </motion.div>
+      </m.div>
     );
   }
 
@@ -280,7 +280,7 @@ export function BookingForm() {
       </div>
 
       {status === 'error' && (
-        <motion.div
+        <m.div
           initial={prefersReduced ? {} : { opacity: 0 }}
           animate={{ opacity: 1 }}
           className="p-4 border border-clay/30 rounded-lg bg-clay/5"
@@ -305,11 +305,11 @@ export function BookingForm() {
             </a>
             .
           </p>
-        </motion.div>
+        </m.div>
       )}
 
       <div className="flex flex-col sm:flex-row sm:items-center gap-4">
-        <motion.button
+        <m.button
           type="submit"
           disabled={status === 'submitting'}
           whileHover={prefersReduced ? {} : { opacity: 0.9 }}
@@ -317,7 +317,7 @@ export function BookingForm() {
           className="w-full sm:w-auto px-8 py-3.5 bg-clay text-canvas text-sm font-medium rounded-lg disabled:opacity-60 transition-opacity"
         >
           {status === 'submitting' ? 'Sending...' : 'Send request'}
-        </motion.button>
+        </m.button>
         <p className="text-xs text-mist">
           Your information is used only to respond to your request and is never
           shared with third parties.

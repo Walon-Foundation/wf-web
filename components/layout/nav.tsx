@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
+import { m, useScroll, useMotionValueEvent } from 'framer-motion';
 import { useState } from 'react';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -15,7 +15,7 @@ export function Nav() {
   });
 
   return (
-    <motion.header
+    <m.header
       initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: EASE }}
@@ -57,6 +57,6 @@ export function Nav() {
           Book a session
         </Link>
       </div>
-    </motion.header>
+    </m.header>
   );
 }
