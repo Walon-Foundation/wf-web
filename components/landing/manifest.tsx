@@ -48,7 +48,7 @@ export function Manifest() {
           whileInView={prefersReduced ? { opacity: 1 } : 'show'}
           viewport={{ once: true, margin: '-80px' }}
           transition={prefersReduced ? { duration: 0.6 } : undefined}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 overflow-visible"
         >
           {PRODUCTS.map((product) => (
             <m.div
