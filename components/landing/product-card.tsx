@@ -6,12 +6,9 @@ import { m, AnimatePresence, useReducedMotion } from 'framer-motion';
 import type { Product } from '@/lib/products';
 
 const EASE = [0.22, 1, 0.36, 1] as const;
-const POPUP_W = 380;
 
 export function ProductCard({ product }: { product: Product }) {
-  const [hovered, setHovered] = useState(false);
-  const [coords, setCoords] = useState({ top: 0, left: 0 });
-  const cardRef = useRef<HTMLDivElement>(null);
+  const [open, setOpen] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const prefersReduced = useReducedMotion();
   const [mounted, setMounted] = useState(false);
@@ -19,24 +16,26 @@ export function ProductCard({ product }: { product: Product }) {
   useEffect(() => { setMounted(true); }, []);
 
   useEffect(() => {
-    if (!hovered) return;
-    const close = () => setHovered(false);
+    if (!open) return;
+    const close = () => setOpen(false);
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') close(); };
     window.addEventListener('scroll', close, { passive: true });
-    return () => window.removeEventListener('scroll', close);
-  }, [hovered]);
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('scroll', close);
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [open]);
 
-  function openPopup() {
-    if (prefersReduced || !cardRef.current) return;
+  function openModal() {
+    if (prefersReduced) return;
     if (timerRef.current) clearTimeout(timerRef.current);
-    const rect = cardRef.current.getBoundingClientRect();
-    const left = Math.max(12, Math.min(rect.left, window.innerWidth - POPUP_W - 12));
-    // card scales 1.04 on hover — add a touch of extra offset to account for it
-    setCoords({ top: rect.bottom + window.scrollY + 6, left });
-    setHovered(true);
+    timerRef.current = setTimeout(() => setOpen(true), 220);
   }
 
-  function delayClose() {
-    timerRef.current = setTimeout(() => setHovered(false), 140);
+  function scheduleClose() {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setOpen(false), 180);
   }
 
   function cancelClose() {
@@ -45,18 +44,18 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <>
-      <div ref={cardRef} onMouseEnter={openPopup} onMouseLeave={delayClose}>
+      <div onMouseEnter={openModal} onMouseLeave={scheduleClose}>
         <m.a
           href={`https://github.com/Walon-Foundation/${product.repo}`}
           target="_blank"
           rel="noopener noreferrer"
           whileHover={prefersReduced ? {} : {
-            y: -8,
-            scale: 1.04,
-            zIndex: 20,
-            boxShadow: '0 24px 56px rgba(26,23,20,0.18)',
+            y: -4,
+            scale: 1.02,
+            zIndex: 10,
+            boxShadow: '0 12px 32px rgba(26,23,20,0.12)',
           }}
-          whileTap={prefersReduced ? {} : { scale: 1.01 }}
+          whileTap={prefersReduced ? {} : { scale: 0.99 }}
           transition={{ type: 'spring', stiffness: 360, damping: 26 }}
           className="relative flex flex-col p-6 border border-hairline rounded-xl bg-canvas hover:border-ink/20 transition-colors h-full"
         >
@@ -73,83 +72,97 @@ export function ProductCard({ product }: { product: Product }) {
 
       {mounted && createPortal(
         <AnimatePresence>
-          {hovered && (
-            <m.div
-              style={{
-                position: 'absolute',
-                top: coords.top,
-                left: coords.left,
-                width: POPUP_W,
-                zIndex: 10000,
-              }}
-              initial={{ opacity: 0, y: -12, scale: 0.94 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8, scale: 0.96 }}
-              transition={{ duration: 0.22, ease: EASE }}
-              onMouseEnter={cancelClose}
-              onMouseLeave={() => setHovered(false)}
-              className="rounded-2xl bg-forest shadow-[0_24px_64px_rgba(0,0,0,0.35)] overflow-hidden"
-            >
-              {/* Arrow notch connecting to card */}
-              <div
-                className="absolute bottom-full left-6 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-b-[8px] border-b-forest"
-                aria-hidden="true"
+          {open && (
+            <>
+              {/* Backdrop */}
+              <m.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.22 }}
+                style={{ position: 'fixed', inset: 0, zIndex: 9998 }}
+                className="bg-ink/50 backdrop-blur-sm"
+                onClick={() => setOpen(false)}
               />
 
-              {/* Contour texture watermark */}
-              <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
-                <svg
-                  viewBox="0 0 380 220"
-                  preserveAspectRatio="xMidYMid slice"
-                  className="w-full h-full opacity-[0.08]"
+              {/* Centering shell — pointer-events off so backdrop click-through works */}
+              <div
+                style={{
+                  position: 'fixed',
+                  inset: 0,
+                  zIndex: 10000,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  pointerEvents: 'none',
+                }}
+              >
+                <m.div
+                  initial={{ opacity: 0, scale: 0.88, y: 24 }}
+                  animate={{ opacity: 1, scale: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.92, y: 14 }}
+                  transition={{ duration: 0.28, ease: EASE }}
+                  style={{ width: 'min(90vw, 520px)', pointerEvents: 'auto' }}
+                  onMouseEnter={cancelClose}
+                  onMouseLeave={scheduleClose}
+                  className="relative bg-forest rounded-2xl overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.55)]"
                 >
-                  <path d="M-20 170 Q 95 128 190 148 Q 285 168 400 136" stroke="#F4F0E8" strokeWidth="1.2" fill="none"/>
-                  <path d="M-20 148 Q 95 104 190 124 Q 285 144 400 112" stroke="#F4F0E8" strokeWidth="1.2" fill="none"/>
-                  <path d="M 30 126 Q 120 78 190 100 Q 264 120 380 86" stroke="#F4F0E8" strokeWidth="1" fill="none"/>
-                  <path d="M 100 102 Q 168 52 210 76 Q 260 98 350 60" stroke="#F4F0E8" strokeWidth="0.8" fill="none"/>
-                </svg>
-              </div>
-
-              <div className="relative p-7">
-                {/* Domain badge */}
-                <p className="font-mono text-xs text-canvas/40 uppercase tracking-[0.2em] mb-4">
-                  {product.domain}
-                </p>
-
-                {/* Repo name */}
-                <h3 className="font-fraunces font-medium text-canvas text-3xl leading-none tracking-tight mb-3">
-                  {product.repo}
-                </h3>
-
-                {/* Description */}
-                <p className="text-canvas/65 text-sm leading-relaxed mb-6">
-                  {product.description}
-                </p>
-
-                {/* Tech stack */}
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {product.tech.map((t) => (
-                    <span
-                      key={t}
-                      className="font-mono text-xs text-canvas/55 border border-canvas/12 rounded-lg px-2.5 py-1"
+                  {/* Contour texture watermark */}
+                  <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+                    <svg
+                      viewBox="0 0 520 300"
+                      preserveAspectRatio="xMidYMid slice"
+                      className="w-full h-full opacity-[0.07]"
                     >
-                      {t}
-                    </span>
-                  ))}
-                </div>
+                      <path d="M-20 210 Q 130 158 260 180 Q 390 202 540 166" stroke="#F4F0E8" strokeWidth="1.4" fill="none"/>
+                      <path d="M-20 182 Q 130 128 260 152 Q 390 174 540 138" stroke="#F4F0E8" strokeWidth="1.4" fill="none"/>
+                      <path d="M 30 154 Q 152 96 260 120 Q 372 144 520 104" stroke="#F4F0E8" strokeWidth="1.1" fill="none"/>
+                      <path d="M 110 124 Q 202 62 270 90 Q 344 116 480 72" stroke="#F4F0E8" strokeWidth="0.9" fill="none"/>
+                    </svg>
+                  </div>
 
-                {/* Footer */}
-                <div className="flex items-center justify-between border-t border-canvas/10 pt-5">
-                  <span className="font-mono text-xs text-canvas/30">
-                    MIT Licensed
-                  </span>
-                  <span className="font-mono text-xs text-clay flex items-center gap-1.5">
-                    View on GitHub
-                    <span aria-hidden="true">→</span>
-                  </span>
-                </div>
+                  <div className="relative p-8 sm:p-10">
+                    <p className="font-mono text-xs text-canvas/40 uppercase tracking-[0.2em] mb-5">
+                      {product.domain}
+                    </p>
+
+                    <h3 className="font-fraunces font-medium text-canvas text-4xl sm:text-5xl leading-none tracking-tight mb-4">
+                      {product.repo}
+                    </h3>
+
+                    <p className="text-canvas/70 text-base leading-relaxed mb-7">
+                      {product.description}
+                    </p>
+
+                    <div className="flex flex-wrap gap-2 mb-8">
+                      {product.tech.map((t) => (
+                        <span
+                          key={t}
+                          className="font-mono text-xs text-canvas/55 border border-canvas/12 rounded-lg px-3 py-1.5"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="flex items-center justify-between border-t border-canvas/10 pt-6">
+                      <span className="font-mono text-xs text-canvas/30">
+                        MIT Licensed
+                      </span>
+                      <a
+                        href={`https://github.com/Walon-Foundation/${product.repo}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="font-mono text-sm text-clay hover:text-canvas transition-colors flex items-center gap-2"
+                      >
+                        View on GitHub
+                        <span aria-hidden="true">→</span>
+                      </a>
+                    </div>
+                  </div>
+                </m.div>
               </div>
-            </m.div>
+            </>
           )}
         </AnimatePresence>,
         document.body
