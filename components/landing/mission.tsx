@@ -6,13 +6,13 @@ import { ContourDivider } from '@/components/ui/contour';
 const EASE = [0.22, 1, 0.36, 1] as const;
 
 const LINES = [
-  'We build software that solves real problems.',
-  'Your data stays private —',
-  'handled with care, secured where it needs to be.',
-  'What we can open-source, we do:',
-  'MIT-licensed, built for low bandwidth, mobile money,',
-  'and the constraints people actually live with.',
-  'Not for screenshots.',
+  'We build systems, not prototypes.',
+  'Frontend to backend to DevOps —',
+  'the full stack, delivered end to end.',
+  'Your data stays private:',
+  'secured at every layer, handled with care.',
+  'We believe in open source.',
+  'What we can give back, we do.',
 ];
 
 const container = {

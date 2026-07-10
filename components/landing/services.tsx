@@ -7,28 +7,28 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 const SERVICES = [
   {
-    name: 'Web applications',
-    detail: 'Full-stack, React, Next.js — performant on slow connections',
+    name: 'Web applications & APIs',
+    detail: 'Full-stack React, Next.js, and backend APIs — built to perform on slow connections',
   },
   {
-    name: 'Mobile apps',
-    detail: 'Expo and React Native, with mobile-money integration',
+    name: 'Mobile apps & PWAs',
+    detail: 'Expo, React Native, and offline-capable PWAs with mobile-money integration',
+  },
+  {
+    name: 'AI systems & RAG',
+    detail: 'Chatbots, retrieval pipelines, document Q&A, and AI-powered product features',
+  },
+  {
+    name: 'DevOps & infrastructure',
+    detail: 'CI/CD pipelines, cloud deployment, server configuration, and IT infrastructure',
   },
   {
     name: 'Payment integration',
-    detail: 'Monime, mobile money, and local payment rails',
+    detail: 'Monime, mobile money, and local Sierra Leone payment rails',
   },
   {
     name: 'Data security & privacy',
-    detail: 'Proper authentication, encrypted storage, and privacy-first architecture for client data',
-  },
-  {
-    name: 'AI and RAG features',
-    detail: 'Chatbots, retrieval pipelines, document Q&A',
-  },
-  {
-    name: 'PWAs for slow networks',
-    detail: 'Offline-capable apps built to work on 3G',
+    detail: 'Authentication, encrypted storage, and privacy-first architecture at every layer',
   },
 ];
 
@@ -56,14 +56,14 @@ export function Services() {
             transition={{ duration: 0.8, ease: EASE }}
           >
             <h2 className="font-fraunces font-medium text-ink text-4xl md:text-5xl mb-6">
-              We build software for you
+              We build systems end to end.
             </h2>
             <p className="text-mist leading-relaxed mb-8">
-              Businesses, NGOs, and individuals hire the foundation to build
-              software that works. We handle client data with care — securing
-              it properly wherever the work calls for it. We know the local
-              infrastructure, the payment landscape, and the constraints your
-              users actually face.
+              Businesses, NGOs, and individuals hire us to build complete
+              software systems — from the first pixel to the server to the
+              deployment pipeline. We know the local infrastructure, the
+              payment landscape, and the network constraints your users
+              actually face.
             </p>
             <Link
               href="/book"

@@ -32,9 +32,9 @@ const item = {
 };
 
 const STATS = [
-  '14 repositories',
-  '4 domains',
-  'MIT-licensed',
+  'web · mobile · AI',
+  'DevOps & infra',
+  'end-to-end delivery',
   'built to run on 3G',
 ];
 
@@ -104,9 +104,9 @@ export function Hero() {
             variants={item}
             className="text-mist text-lg md:text-xl leading-relaxed max-w-xl mb-10"
           >
-            Walon Foundation builds custom software for clients worldwide —
-            securing their data where it matters, and open-sourcing what we can
-            under the MIT license.
+            We build complete systems — frontend, backend, mobile, AI, and
+            infrastructure — for businesses and organizations that need
+            software that actually works.
           </m.p>
 
           <m.div
