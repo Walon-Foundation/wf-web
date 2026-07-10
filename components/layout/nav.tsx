@@ -34,11 +34,11 @@ export function Nav() {
         </Link>
 
         <nav className="hidden md:flex items-center gap-8 text-sm text-mist">
-          <Link href="/#work" className="hover:text-ink transition-colors">
+          <Link href="/work" className="hover:text-ink transition-colors">
             Work
           </Link>
-          <Link href="/#services" className="hover:text-ink transition-colors">
-            Services
+          <Link href="/team" className="hover:text-ink transition-colors">
+            Team
           </Link>
           <a
             href="https://github.com/Walon-Foundation"
