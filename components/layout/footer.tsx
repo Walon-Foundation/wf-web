@@ -12,7 +12,7 @@ export function Footer() {
               Walon Foundation
             </p>
             <p className="text-mist text-sm max-w-xs">
-              Custom software and open-source tools. Freetown, Sierra Leone.
+              End-to-end software systems. Freetown, Sierra Leone.
             </p>
           </div>
 
@@ -43,7 +43,7 @@ export function Footer() {
         </div>
 
         <div className="mt-10 pt-6 border-t border-hairline flex flex-col sm:flex-row justify-between gap-4 text-xs text-mist">
-          <span>Freetown, Sierra Leone · MIT-licensed — open by default</span>
+          <span>Freetown, Sierra Leone · client-first · open source where we can</span>
           <div className="flex gap-4">
             <Link href="/privacy" className="hover:text-ink transition-colors">
               Privacy

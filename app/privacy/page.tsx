@@ -94,11 +94,11 @@ export default function PrivacyPage() {
                 Data security
               </h2>
               <p className="text-mist">
-                Booking submissions are delivered by Resend, an email delivery
-                provider, to our team inbox. We treat email as private
-                correspondence. For projects that require handling sensitive
-                client data — user records, payment information, health data —
-                we apply appropriate security measures: encryption at rest,
+                Booking submissions are stored in Airtable, a cloud database
+                we use as our internal inbox. Only the Walon Foundation team
+                has access. For projects that require handling sensitive client
+                data — user records, payment information, health data — we
+                apply appropriate security measures: encryption at rest,
                 role-based access controls, and minimal data collection
                 practices. The security requirements for your project will be
                 agreed on before work begins.

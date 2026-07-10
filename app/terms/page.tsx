@@ -5,7 +5,7 @@ import { Footer } from '@/components/layout/footer';
 
 export const metadata: Metadata = {
   title: 'Terms of Service',
-  description: 'Terms governing Walon Foundation services and open-source software.',
+  description: 'Terms governing Walon Foundation software engagements and open-source tools.',
 };
 
 export default function TermsPage() {
@@ -38,11 +38,11 @@ export default function TermsPage() {
                 What we do
               </h2>
               <p className="text-mist">
-                Walon Foundation builds custom software for clients: web
-                applications, mobile apps, payment integrations, AI features,
-                and offline-capable PWAs. We also maintain open-source
-                repositories released under the MIT license. These terms apply
-                to both.
+                Walon Foundation builds complete software systems for clients:
+                web applications, backend APIs, mobile apps, PWAs, AI and RAG
+                features, DevOps pipelines, and IT infrastructure. We also
+                maintain open-source tools released under the MIT license.
+                These terms apply to both.
               </p>
             </section>
 

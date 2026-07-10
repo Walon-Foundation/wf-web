@@ -7,10 +7,11 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 const BUILD_TYPES = [
   { value: 'web-app', label: 'Web app' },
+  { value: 'backend-api', label: 'Backend / API' },
   { value: 'mobile-app', label: 'Mobile app' },
+  { value: 'ai-rag', label: 'AI / RAG system' },
+  { value: 'devops-infra', label: 'DevOps / infrastructure' },
   { value: 'payment-integration', label: 'Payment / mobile money' },
-  { value: 'ai-feature', label: 'AI feature' },
-  { value: 'data-security', label: 'Data & security' },
   { value: 'not-sure', label: 'Not sure yet' },
 ];
 

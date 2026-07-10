@@ -51,7 +51,7 @@ export default function BookPage() {
                   <div className="flex gap-3">
                     <span className="font-mono text-xs text-canvas/40 pt-0.5 shrink-0">01</span>
                     <p className="text-canvas/70 leading-relaxed">
-                      Web apps, mobile apps, payment integrations, and AI features — built to work in Sierra Leone's network conditions.
+                      Web apps, backend APIs, mobile, AI systems, DevOps, and IT infrastructure — complete systems built to work in real conditions.
                     </p>
                   </div>
                   <div className="flex gap-3">

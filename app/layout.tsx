@@ -9,20 +9,21 @@ export const metadata: Metadata = {
     template: '%s | Walon Foundation',
   },
   description:
-    'An open-source software collective in Freetown, Sierra Leone. MIT-licensed tools built for local constraints — and custom software for hire.',
+    'Walon Foundation builds complete software systems — frontend, backend, mobile, AI, and DevOps — for businesses and organizations worldwide. Based in Freetown, Sierra Leone.',
   openGraph: {
     type: 'website',
     locale: 'en_US',
     siteName: 'Walon Foundation',
     title: 'Walon Foundation — Software for Sierra Leone',
     description:
-      'Open-source software collective in Freetown, Sierra Leone. Custom software for clients worldwide.',
+      'End-to-end software systems built by Sierra Leoneans — web, mobile, AI, DevOps, and IT infrastructure. Client-first. Based in Freetown.',
     images: [{ url: '/og-image.svg', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Walon Foundation — Software for Sierra Leone',
-    description: 'Open-source software collective in Freetown, Sierra Leone.',
+    description:
+      'End-to-end software systems — frontend to backend to DevOps — built in Freetown, Sierra Leone.',
     images: ['/og-image.svg'],
   },
   metadataBase: new URL('https://walonfoundation.com'),
