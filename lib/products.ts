@@ -24,6 +24,7 @@ export const PRODUCTS: Product[] = [
     domain: 'Programming language',
     language: 'Go / Rust',
     tech: ['Go', 'Rust', 'Interpreter', 'Compiler'],
+    url: 'https://code-lang.walonfoundation.com',
   },
   {
     repo: 'ikigai',
@@ -50,6 +51,7 @@ export const PRODUCTS: Product[] = [
     domain: 'Developer tooling',
     language: 'Rust',
     tech: ['Rust', 'CLI', 'HTTP'],
+    url: 'https://blast.walonfoundation.com',
   },
   {
     repo: 'tele-health',
